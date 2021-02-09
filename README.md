@@ -10,19 +10,19 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 
 ### 2-1: 音声合成
 「Voice_Synthesis.html」が入力された文字を読み上げるだけのシンプルなプログラムです。　本プログラムは、色々なプラウザに対応しており、プラウザによって使用できる音声が異なりますので、お楽しみください。　なお、一般的な設定では、日本語と英語に対応しています。　次のリンクで音声合成のデモが確認できます。  
-[音声合成のデモへのリンク]()  
+[音声合成のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis.html)  
 
 ### 2-2: 音声認識
 「Voice_Recognition.html」が標準入力デバイスであるマイクから入力された音声を文字で表示するプログラムです。　使用できるプラウザは、現在のところGoogle Chromeのみのようです。　また、一般的な設定では、日本語の入力にのみ対応しています。　次のリンクで音声認識のデモが確認できます。  
-[音声認識のデモへのリンク]()  
+[音声認識のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Recognition.html)  
 
 ### 2-3: 音声合成と音声認識を使用した人口無脳との会話（TinySegmenter 版）
 「Voice_Synthesis_and_Recognition_001.html」がTinySegmenterを使用した人口無脳との会話プログラムです。　簡単な人口無脳ですので、シナリオに沿った受け答えしかできませんが、ご自身で会話データを作成し読み込ませることで拡張できるようにしています。　会話データは、「./Data/Talk_List_002.csv」を参考に、エクセル等でA列にあなたの言葉や質問を、B列以降に人口無脳からの返答を数個記載（任意の返答がランダムに返されることになる）して作成して下さい。　なお、作成した会話データは、csv形式、Shift-JISでローカルに保存して下さい。　プログラムの上部にファイル選択がありますので、そこから作成した会話データを読み込むことになります。　次のリンクで人口無脳のデモが確認できます。  
-[TinySegmenterによる人工無脳のデモへのリンク]()  
+[TinySegmenterによる人工無脳のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_001.html)  
 
 ### 2-4: 音声合成と音声認識を使用した人口無脳との会話（RakutenMA 版）
 「Voice_Synthesis_and_Recognition_002.html」がRakutenMAを使用した人口無脳との会話プログラムです。　形態素解析エンジンが異なるだけで、扱いは上記2-3項と同様です。　次のリンクで音声認識のデモが確認できます。  
-[RakutenMAによる人工無脳のデモへのリンク]()  
+[RakutenMAによる人工無脳のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_002.html)  
 
 ### おまけ：
 フリーの形態素解析エンジンには、「Kuromoji」もありますが、辞書が充実している分処理が重くなるようで、上記と同様なプログラムでは一拍遅れてしまいました。  
