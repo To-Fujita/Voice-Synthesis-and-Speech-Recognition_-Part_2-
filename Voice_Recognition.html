@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>Voice Recognition Test - 2021/02/02 by T. Fujita</title>
+  </head>
+  <style>
+     body {
+      background-image: url(./Data/kareem-roberts-LuoGb_Lgfk8-2615x1743.jpg);
+      background-size: cover;
+    }
+  </style>
+  <body>
+    <center>
+      <br/><br/>
+      <font color="white">
+        <h2>音声認識テスト（対象ブラウザ： Google Chrome）</h2>
+      </font>
+      <br/><br/>
+      <input type="submit" value="音声認識-開始" onclick="Start()">　　
+      <input type="submit" value="音声認識-終了" onclick="Stop()">　　
+      <font color="white">
+        <span id="statusData">　音声認識停止中</span>
+      </font>
+      <br/><br/>
+      <font color="red">
+        <div id="result-div"></div>
+      </font>
+    </center>
+    <script>
+      const resultDiv = document.querySelector('#result-div');
+      const status_Data = document.getElementById('statusData');
+      
+      SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+      let recognition = new SpeechRecognition();
+    
+      recognition.lang = 'ja-JP';
+      recognition.interimResults = true;
+      recognition.continuous = true;
+    
+      let finalTranscript = '';       // 確定した認識結果
+    
+      recognition.onresult = (event) => {
+        let interimTranscript = '';   // 暫定の認識結果
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          let transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + '　';
+          } else {
+            interimTranscript = transcript;
+          }
+        }
+        resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';
+      }
+
+      recognition.onstart = (event) => {
+        status_Data.innerHTML = "　音声認識実行中";
+      }
+
+      recognition.onend = (event) => {
+        status_Data.innerHTML = "　音声認識停止中";
+      }
+     
+      function Start() {
+        status_Data.innerHTML = "　音声認識実行中";
+        recognition.start();
+      }
+
+      function Stop() {
+        status_Data.innerHTML = "　音声認識停止中";
+        recognition.stop();
+      }
+    </script>
+  </body>
+</html>

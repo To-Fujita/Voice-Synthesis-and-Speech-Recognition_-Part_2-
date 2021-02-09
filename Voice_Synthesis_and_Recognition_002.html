@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/Slider.css">
+    <title>Voice Synthesis and Recognition Test - 2021/02/08 by T. Fujita</title>
+    <script type="text/javascript" src="./js/rakutenma.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="./js/model_ja.js" charset="UTF-8"></script>
+    <!-- <script type="text/javascript" src="./js/hanzenkaku.js" charset="UTF-8"></script>  -->
+  </head>
+  <style>
+    body {
+      background-image: url(./Data/revolt-BMest61rcqs-2615x1743.jpg);
+      background-size: cover;
+    }
+  </style>
+  <body>
+  <center>
+    <font color="black">
+      <h2>音声合成・認識 with rakutenma（対象ブラウザ： Google Chrome）</h2>
+      <label for""file">会話用csvファイル（Shift-JIS）の追加：　</label>
+      <input type="file" name="select" id="select">
+    </font>
+    <br/><font color="black"><span style="vertical-align:2em">入力枠：</span></font>
+    <textarea id="text_in" rows= "3" cols="80">これは、形態素解析テストです。　ここに入力した文章を解析します。</textarea>
+    <br/>
+    <input type="submit" value="形態素解析" onclick="Segment()">　
+    <input type="submit" value="クリア" onclick="Clear()">　
+    <input type="submit" value="送　信" onclick="Send()">　
+    <input type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">　
+    <input type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">
+    <br/><font color="black"><span style="vertical-align:12em">出力枠：</span></font>
+    <textarea id="text_out" rows= "15" cols="80" readonly>ここに解析結果を表示します。</textarea>
+    <br/>
+    <select id="voice-select"></select>
+    <br/>
+    <input id="rate" type="range" class="R_range" min="0" max="2" step="0.2" value="1"><font color="white"> (speed: <span id="current-value" >1.0</span>)</font>
+    <br/>
+    <input id="pitch" type="range" class="B_range" min="0" max="2" step="0.2" value="1"><font color="white"> (pitch : <span id="current-pitch">1.0</span>)</font>
+    <br/><br/>
+    <font color="white">
+      <span>音声設定状況：　　</span>
+      <span id="Speech_Flag">音声合成 OFF</span>　　　
+      <span id="Talk_Flag">音声認識 OFF</span>
+    </font>
+  </center>
+  <script type = "text/javascript">
+    const Talk_Data_url = "./Data/Talk_List_002_UTF8.csv";
+    const results = document.getElementById("text_out");
+    const SF_val = document.getElementById("Speech_Flag")
+    const TF_val = document.getElementById("Talk_Flag")
+    const uttr = new SpeechSynthesisUtterance();
+    const voiceSelect = document.querySelector('#voice-select')
+    const speed = document.getElementById('rate')
+    const currentValueElem = document.getElementById('current-value')
+    const pitch_val = document.getElementById('pitch')
+    const currentPitchElem = document.getElementById('current-pitch')
+    const textData = document.querySelector('#text')
+    const speakBtn = document.querySelector('#speak-btn')
+    const cancelBtn = document.querySelector('#cancel-btn')
+    const pauseBtn = document.querySelector('#pause-btn')
+    const resumeBtn = document.querySelector('#resume-btn')
+    let textarea = document.getElementById("text_in");
+    let Talk_Data = [];
+    let Talk_flag = [];
+    let sentence = [];
+    let partName = [];
+    let answer;
+    let question;
+    let Flag_Talk = 0;
+    let Flag_Speech = 0;
+    let finalTranscript = '';       // 確定した認識結果
+    let interimTranscript = '';     // 暫定の認識結果    
+    let recognition;
+    var Talk_Data_Count;
+
+    CSV_Read(Talk_Data_url);
+    appendVoices()
+    SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.lang = 'ja-JP';
+    recognition.interimResults = true;
+    recognition.continuous = true;
+    
+    // 形態素解析ボタンが押された時の処理
+    function Segment() {
+      RakutenMA_Segment(textarea.value);
+      textarea.scrollTop = textarea.scrollHeight;
+    }
+
+    // クリアボタンが押された時の処理
+    function Clear() {
+      results.value = "";
+      textarea.value = "";
+      interimTranscript = "";
+      finalTranscript = "";
+    } 
+
+    // 送信ボタンが押された時の処理
+    function Send() {
+      let results_Lines;
+      let temp = results.value;
+      let words = textarea.value;
+      let num;
+      let temp_01;
+
+      if (Talk_flag == 1) {
+        temp_01 = question.length;
+        words = question[question.length - 1];
+      }
+
+      if (words == "" || words == null) {
+        words = "　"; 
+      }
+      num = temp.match(/\r\n/g);
+      num = temp.match(/\n/g)
+      if (num != null) {
+        results_Lines = num.length + 1;
+      }
+      else {
+        results_Lines = 1;
+      }
+
+      if (results_Lines > 100) {
+        results.value = ""; 
+      }
+      CheckData(words);
+
+      if (results.value == "" || results.value == null) {
+        results.value = "\r\nあなた： " + words + "\r\n私： " + answer;
+      } else {
+        results.value = results.value + "\r\nあなた： " + words + "\r\n私： " + answer;
+      }
+      interimTranscript = "";
+      finalTranscript = "";
+      textarea.value = "";
+      // textarea.scrollTop = textarea.scrollHeight;
+      results.scrollTop = results.scrollHeight;
+      speech();
+    }
+
+    // 質問に対する答えを選択
+    function CheckData(words) {
+      for (var i=0; i<Talk_Data.length; i++) {
+        Talk_flag[i] = 0;
+      }
+      var Temp_sentence = Keitaiso(words);
+      // alert(Temp_sentence.length);
+      for(var i=0; i<Temp_sentence.length; i++) {
+        sentence[i] = Temp_sentence[i][0];
+        partName[i] = Temp_sentence[i][1];
+      }
+      sentence.forEach(function(value){
+        if (value != "、" || value != "。") {
+          for(var i=0; i<Talk_Data.length; i++) {
+            if (Talk_Data[i][0].indexOf(value) >= 0) {
+              Talk_flag[i] = Talk_flag[i] + value.length;
+            }
+          }
+        }
+      });
+      let aryMax = function(a, b) {return Math.max(a, b);}
+      let max = Talk_flag.reduce(aryMax)
+      let Temp = [];
+      let count = 0;
+      let qusNo;
+      let ansNo;
+
+      for (var i=0; i<Talk_Data.length; i++) {
+        if(Talk_flag[i] == max) {
+          Temp[count] = i;
+          count = count + 1;
+        }
+      }
+      qusNo = Temp[Math.floor(Math.random() * count)];
+      count = 0;
+      for (var i=1; i<Talk_Data[qusNo].length; i++) {
+        if (Talk_Data[qusNo][i] != "")
+        count = count + 1;
+      }
+      ansNo = Math.floor(Math.random() * (count - 1) + 1);
+      answer= Talk_Data[qusNo][ansNo];
+    }
+
+    // 会話用csvファイル（Shift-JIS）の追加読み込み
+    if(window.File) {
+      Talk_Data_Count = Talk_Data.length;
+      var select = document.getElementById('select');
+	      select.addEventListener('change', function(e) {
+		      var fileData = e.target.files[0];
+		      var reader = new FileReader();
+		      reader.onerror = function() {
+			      alert('ファイル読み取りに失敗しました')
+		      }
+		      reader.onload = function() {
+			      var lineArr = reader.result.split('\n');
+			      for (var i = 0; i < lineArr.length; i++) {
+				      Talk_Data[i + Talk_Data_Count] = lineArr[i].split(',');
+			      }
+		      }
+		      reader.readAsText(fileData, 'Shift_JIS');
+	      }, false);
+    }      
+    
+    // 基本会話データ（CSVファイル／UTF-8）の読み込み
+    function CSV_Read(dataPath) {
+      let reader = new XMLHttpRequest();
+      reader.open("get", dataPath, true);
+      reader.send(null);
+      reader.onload = function() {
+        convertCSVtoArray(reader.responseText);
+      }
+    }
+
+    // CSVを配列に格納
+    function convertCSVtoArray(str) {
+      let tmp = str.split("\n");
+      for (var i=0; i<tmp.length; ++i) {
+        Talk_Data[i] = tmp[i].split(',');
+      }
+      Talk_Data_Count = Talk_Data.length;
+    }
+
+    // 音声合成 ON/OFFボタンが押された時の処理
+    function Fsynthesis() {
+      if (Flag_Speech == 0) {
+        Flag_Speech = 1;
+        SF_val.innerHTML = "音声合成 ON "; 
+      }
+      else {
+        Flag_Speech = 0;
+        SF_val.innerHTML = "音声合成 OFF";
+      }
+    }
+
+    // 音声認識 ON/OFFボタンが押された時の処理
+    function Frecognition() {
+      if (Flag_Talk == 0) {
+        Flag_Talk = 1;
+        TF_val.innerHTML = "音声認識 ON ";
+        recognition.start();
+      }
+      else {
+        Flag_Talk = 0;
+        TF_val.innerHTML = "音声認識 OFF";
+        recognition.stop();
+      }
+    }
+
+    // 音声を変更した時の処理
+    speechSynthesis.onvoiceschanged = e => {
+      appendVoices()
+    }
+
+    // スライドバー変更時の処理
+    var rangeValue = function (elem, target) {
+      return function(evt) {
+        target.innerHTML = elem.value
+      }
+    }
+    
+    speed.addEventListener('input', rangeValue(speed, currentValueElem))
+    pitch_val.addEventListener('input', rangeValue(pitch_val, currentPitchElem))
+
+    // 音声合成での発声
+    function speech() {
+      if (Flag_Speech == 0) {return}
+      uttr.text = answer;
+      uttr.rate = speed.value;
+      uttr.pitch = pitch_val.value;
+      uttr.voice = speechSynthesis.getVoices().filter(voice => voice.name === voiceSelect.value) [0]
+      speechSynthesis.speak(uttr)
+    }
+
+    // 音声の選択
+    function appendVoices() {
+      const voices = speechSynthesis.getVoices()
+      voiceSelect.innerHTML = ''
+      voices.forEach(voice => {
+      // 日本語以外の声は選択肢に追加しない。
+       if(!voice.lang.match('ja')) return
+        const option = document.createElement('option')
+        option.value = voice.name
+        option.text  = `${voice.name} (${voice.lang})`
+        option.setAttribute('selected', voice.default)
+        voiceSelect.appendChild(option)
+      });
+    }
+ 
+    // 音声認識処理
+    recognition.onresult = (event) => {
+        interimTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          let transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + '\r\n';
+            question = finalTranscript.split("\r\n");
+            Send();
+          } else {
+            interimTranscript = transcript;
+          }
+        }
+        textarea.value = finalTranscript + interimTranscript ;        
+    }
+
+    // for rakutenma
+    var rma = new RakutenMA(model_ja);
+    
+    function RakutenMA_Segment(words) {
+      rma.featset = RakutenMA.default_featset_ja;
+      rma.hash_func = RakutenMA.create_hash_func(15);
+      sentence = rma.tokenize(words);
+      results.value = sentence.join(" | ");
+    }
+
+    function Keitaiso(words) {
+      rma.featset = RakutenMA.default_featset_ja;
+      rma.hash_func = RakutenMA.create_hash_func(15);
+      // 半角文字をそのままで使用する場合
+      var token = rma.tokenize(words);
+      // 半角文字を全角に変換する場合
+      //tokens = rma.tokenize(HanZenKaku.hs2fs(HanZenKaku.hw2fw(HanZenKaku.h2z(textarea.value)))); 
+      return token;
+    }
+
+  </script>
+  </body>
+</html>

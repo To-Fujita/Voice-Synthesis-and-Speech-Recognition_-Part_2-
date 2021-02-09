@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Index for Voice Synthesis and Speech Recognition</title>
+  <style>
+	body {
+	  font-family: Alegreya Sans;
+	  background: #feeded;
+	}
+	.menu {
+	  position: relative;
+	  background: #cd3e3d;
+	  width: 3em;
+	  height: 3em;
+	  border-radius: 5em;
+	  margin: auto;
+	  margin-top: 5em;
+	  margin-bottom: 5em;
+	  cursor: pointer;
+	  border: 1em solid #fdaead;
+	}
+	.menu:after {
+	  content: "";
+	  position: absolute;
+	  top: 1em;
+	  left: 1em;
+	  width: 1em;
+	  height: 0.2em;
+	  border-top: 0.6em double #fff;
+	  border-bottom: 0.2em solid #fff;
+	}
+	.menu ul {
+	  list-style: none;
+	  padding: 0;
+	}
+	.menu li {
+	  width: 12em;
+	  height: 1.4em;
+	  padding: 0.2em;
+	  margin-top: 0.2em;
+	  text-align: center;
+	  border-top-right-radius: 0.5em;
+	  border-bottom-right-radius: 0.5em;
+	  transition: all 1s;
+	  background: #fdaead;
+	  opacity: 0;
+	  z-index: -1;
+	}
+	.menu:hover li {
+	  opacity: 1;
+	}
+	.menu:hover ul::before {
+	  position: absolute;
+	  content: "";
+	  width: 0;
+	  height: 0;
+	  display: block;
+	  left: 50%;
+	  top: -5.0em;
+	  border-width: 6.5em;
+	  border-radius: 0 7.5em 7.5em 0;
+	  border-left: 0;
+	  border-style: solid;
+	  border-color: rgba(0,0,0,0.01);
+	  z-index: -1;
+	  cursor: default;
+	}
+	.menu a {
+	  color: white;
+	  text-decoration: none;
+	  line-height: 1.5em;
+	}
+	.menu ul {
+	  transform: rotate(180deg) translateY(-2em);
+	  transition: 1s all;
+	}
+	.menu:hover ul {
+	  transform: rotate(0deg) translateY(-1em);
+	}
+	.menu li:hover {
+	  background: #cd3e3d;
+	  z-index: 10;
+	}
+	.menu li:nth-of-type(1) {
+	  transform: rotate(-60deg);
+	  position: absolute;
+	  left: -0.4em;
+	  top: -7.0em;
+	}
+	.menu li:nth-of-type(2) {
+	  position: absolute;
+	  left: 3.7em;
+	  top: 0.4em;
+	}
+	.menu li:nth-of-type(3) {
+	  transform: rotate(60deg);
+	  position: absolute;
+	  left: -0.4em;
+	  top: 7.8em;
+	}
+	.menu li:nth-of-type(4) {
+	  transform: rotate(120deg);
+	  position: absolute;
+	  left: -9.0em;
+	  top: 7.8em;
+	}
+	.menu li:nth-of-type(5) {
+	  transform: rotate(180deg);
+	  position: absolute;
+	  left: -13.2em;
+	  top: 0.4em;
+	}
+	.menu li:nth-of-type(6) {
+	  transform: rotate(-120deg);
+	  position: absolute;
+	  left: -9.0em;
+	  top: -7.0em;
+	}
+	.hint {
+	  text-align: center;
+	}
+	.right {
+	  text-align: right;
+	}
+  </style>
+</head>
+
+<body>
+<BR>
+<h1 class="hint">Menu for Vioce Synthesis & Recognition</h1>
+<h3 class="right">2021/2/1 by T. Fujita</h3>
+<BR>
+<nav class="menu">
+  <ul>
+    <li><a href="./Voice_Synthesis.html" title="音声合成">1. Voice Synthesis</a></li>
+    <li><a href="./Voice_Recognition.html" title="音声認識">2. Voice Recognition</a></li>
+    <li><a href="./Voice_Synthesis_and_Recognition_001.html" title="音声合成と音声認識で人工無脳 with Tiny-segmenter">3. Tiny Chatbot #1</a></li>
+	<li><a href="./Voice_Synthesis_and_Recognition_002.html" title="音声合成と音声認識で人工無脳 with RakutenMA">4. Tiny Chatbot #2</a></li>
+  </ul>
+</nav>
+<BR><BR>
+<p class="hint">Hover to show menu!</p>
+</body>
+</html>
