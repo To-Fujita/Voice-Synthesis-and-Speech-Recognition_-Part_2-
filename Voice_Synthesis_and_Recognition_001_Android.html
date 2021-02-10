@@ -280,16 +280,19 @@
       let interimTranscript = '';     // 暫定の認識結果（Androidでは、うまく機能しない）
       let finalTranscript = '';       // 確定した認識結果
       for (let i = event.resultIndex; i < event.results.length; i++) {
-          if (event.results[i].isFinal) {
-            finalTranscript = event.results[i][0].transcript;
-            question = finalTranscript;
-            if (question != null) {
+        if (event.results[i].isFinal) {
+          finalTranscript = event.results[i][0].transcript;
+          question = finalTranscript;
+          if (question != null || question != "") {
+            if (question != undefined) {
               textarea.value = question;
               Send();
-            } 
-          } else {
-            interimTranscript = '';
-          }
+              question = "";
+            }
+        }
+        } else {
+          interimTranscript = '';
+        }
       }
     }
 
