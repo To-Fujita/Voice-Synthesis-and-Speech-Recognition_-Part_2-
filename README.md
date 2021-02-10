@@ -13,8 +13,9 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 [音声合成のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis.html)  
 
 ### 2-2: 音声認識
-「Voice_Recognition.html」が標準入力デバイスであるマイクから入力された音声を文字で表示するプログラムです。　使用できるプラウザは、現在のところGoogle Chromeのみのようです。　また、一般的な設定では、日本語の入力にのみ対応しています。　次のリンクで音声認識のデモが確認できます。  
-[音声認識のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Recognition.html)  
+「Voice_Recognition.html」が標準入力デバイスであるマイクから入力された音声を文字で表示するプログラムです。　使用できるプラウザは、現在のところGoogle Chromeのみのようです。　また、一般的な設定では、日本語の入力にのみ対応しており、次のリンクで音声認識のデモが確認できます。　なお、Windows10とAndroidでWeb Speech APIの挙動が若干異なるようですので、Windows10用とAndroid用のデモをそれぞれ準備しました。  
+[音声認識（Windows10用）のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Recognition.html)  
+[音声認識（Android用）のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Recognition_Android.html)  
 
 ### 2-3: 音声合成と音声認識を使用した人口無脳との会話（TinySegmenter 版）
 「Voice_Synthesis_and_Recognition_001.html」がTinySegmenterを使用した人口無脳との会話プログラムです。　簡単な人口無脳ですので、シナリオに沿った受け答えしかできませんが、ご自身で会話データを作成し読み込ませることで拡張できるようにしています。　会話データは、「./Data/Talk_List_002.csv」を参考に、エクセル等でA列にあなたの言葉や質問を、B列以降に人口無脳からの返答を数個記載（任意の返答がランダムに返されることになる）して作成して下さい。　なお、作成した会話データは、csv形式、Shift-JISでローカルに保存して下さい。　プログラムの上部にファイル選択がありますので、そこから作成した会話データを読み込むことになります。　次のリンクで人口無脳のデモが確認できます。  
