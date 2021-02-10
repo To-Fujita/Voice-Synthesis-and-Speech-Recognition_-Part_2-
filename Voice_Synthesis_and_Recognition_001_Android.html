@@ -259,6 +259,7 @@
       uttr.voice = speechSynthesis.getVoices().filter(voice => voice.name === voiceSelect.value) [0]
       speechSynthesis.speak(uttr)
       answer = "";
+      question = "";
     }
 
     // 音声の選択
@@ -307,13 +308,13 @@
         }
       }
     }
-/*
+
     recognition.onend = (event) => {
       if (Flag_Talk == 1) {
         recognition.start();
       } 
     }
-*/
+
     // for Tiny Segmenter
     let segmenter = new TinySegmenter();
     
