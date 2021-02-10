@@ -258,6 +258,7 @@
       uttr.pitch = pitch_val.value;
       uttr.voice = speechSynthesis.getVoices().filter(voice => voice.name === voiceSelect.value) [0]
       speechSynthesis.speak(uttr)
+      answer = "";
     }
 
     // 音声の選択
@@ -276,10 +277,8 @@
     }
  
     if (speechSynthesis.speaking == true) {
-      if (Flag_Talk == 1) {
-        recognition.stop();
-        question = null;
-      } 
+      recognition.stop();
+      question = null;
     }
     else {
       if (Flag_Talk == 1) {
