@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="./css/Slider.css">
+    <link rel="stylesheet" href="./css/Slider_01.css">
     <title>Voice Synthesis and Recognition Test for Android - 2021/02/10 by T. Fujita</title>
     <script type="text/javascript" src="./js/tiny_segmenter-0.2.js" charset="UTF-8"></script>
   </head>
@@ -11,34 +11,58 @@
       background-image: url(./Data/nicolas-lafargue-2FcSIYJQkTM-2615x1743.jpg);
       background-size: cover;
     }
+    input.button_01 {
+      font-size: 1.7em;
+      padding: 10px 10px;
+    }
+    input.button_02 {
+      font-size: 1.5em;
+      padding: 10px 10px;
+    }
+    textarea.box {
+      font-size: 1.7em;
+    }
+    select.sel {
+      font-size: 1.6em;
+    }
   </style>
   <body>
   <center>
     <font color="black">
       <h1>音声合成・認識 with tiny_segmenter<br/>（対象ブラウザ： Google Chrome on Android）</h1>
     </font>
-    <label for""file">会話用csvファイル（Shift-JIS）の追加：　</label>
-    <input type="file" name="select" id="select">
-    <br/><span style="vertical-align:2em">入力枠：</span>
-    <textarea id="text_in" rows= "3" cols="80">これは、形態素解析テストです。　ここに入力した文章を解析します。</textarea>
+    <font size="5">
+      <label for""file">会話用csvファイル（Shift-JIS）の追加：</label>
+    </font>
+    <input class="button_02" type="file" name="select" id="select">
     <br/>
-    <input type="submit" value="形態素解析" onclick="Segment()">　
-    <input type="submit" value="クリア" onclick="Clear()">　
-    <input type="submit" value="送　信" onclick="Send()">　
-    <input type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">　
-    <input type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">
-    <br/><span style="vertical-align:12em">出力枠：</span>
-    <textarea id="text_out" rows= "15" cols="80" readonly>ここに解析結果を表示します。</textarea>
+    <font size="5">
+      <span style="vertical-align:2em">入力枠：</span>
+    </font>
+    <textarea class="box" id="text_in" rows= "3" cols="80">これは、形態素解析テストです。　ここに入力した文章を解析します。</textarea>
     <br/>
-    <select id="voice-select"></select>
+    <input class="button_01" type="submit" value="形態素解析" onclick="Segment()">　
+    <input class="button_01" type="submit" value="クリア" onclick="Clear()">　
+    <input class="button_01" type="submit" value="送　信" onclick="Send()">　
+    <input class="button_01" type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">　
+    <input class="button_01" type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">
     <br/>
-    <input id="rate" type="range" class="R_range" min="0" max="2" step="0.2" value="1"><font color="black"> (speed: <span id="current-value" >1.0</span>)</font>
+    <font size="5">
+      <span style="vertical-align:10em">出力枠：</span>
+    </font>
+    <textarea class="box" id="text_out" rows= "15" cols="80" readonly>ここに解析結果を表示します。</textarea>
     <br/>
-    <input id="pitch" type="range" class="B_range" min="0" max="2" step="0.2" value="1"><font color="black"> (pitch : <span id="current-pitch">1.0</span>)</font>
+    <select class="sel" id="voice-select"></select>
     <br/>
-    <span>音声設定状況：　　</span>
-    <span id="Speech_Flag">音声合成 OFF</span>　　　
-    <span id="Talk_Flag">音声認識 OFF</span>
+    <input id="rate" type="range" class="R_range" min="0" max="2" step="0.2" value="1"><font color="black" size="6"> (speed: <span id="current-value" >1.0</span>)</font>
+    <br/>
+    <input id="pitch" type="range" class="B_range" min="0" max="2" step="0.2" value="1"><font color="black" size="6"> (pitch : <span id="current-pitch">1.0</span>)</font>
+    <br/>
+    <font size="7">
+      <span>音声設定状況：　　</span>
+      <span id="Speech_Flag">音声合成 OFF</span>　　　
+      <span id="Talk_Flag">音声認識 OFF</span>
+    </font>
   </center>
   <script type = "text/javascript">
     const Talk_Data_url = "./Data/Talk_List_002_UTF8.csv";
