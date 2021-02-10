@@ -32,13 +32,12 @@
       const status_Data = document.getElementById('statusData');
       let Speech_flag = 0;
       let Temp_Data = ' ';
-      let transcript = '';
       
       SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
       let recognition = new SpeechRecognition();
     
       recognition.lang = 'ja-JP';
-      recognition.interimResults = true;
+      recognition.interimResults = false;
       recognition.continuous = true;
         
       recognition.onresult = (event) => {
@@ -47,7 +46,7 @@
         for (var i = event.resultIndex; i < event.results.length; i++) {
           let transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
-            finalTranscript = transcript;
+            finalTranscript += transcript;
           } else {
             interimTranscript = '';
           }
@@ -64,7 +63,6 @@
 
       recognition.onend = (event) => {
         if (Speech_flag == 1) {
-          // finalTranscript = '';
           recognition.start();
         } 
       }
