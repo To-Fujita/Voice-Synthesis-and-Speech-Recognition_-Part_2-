@@ -276,18 +276,7 @@
         voiceSelect.appendChild(option)
       });
     }
-/* 
-    if (speechSynthesis.speaking == true) {
-      recognition.stop();
-      question = null;
-    }
-    else {
-      if (Flag_Talk == 1) {
-        recognition.start();
-        answer = "";
-      } 
-    }
-*/
+
     // 音声認識処理
     recognition.onresult = (event) => {
       let interimTranscript = '';     // 暫定の認識結果（Androidでは、うまく機能しない）

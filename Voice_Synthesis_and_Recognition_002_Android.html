@@ -6,7 +6,6 @@
     <title>Voice Synthesis and Recognition Test for Android - 2021/02/10 by T. Fujita</title>
     <script type="text/javascript" src="./js/rakutenma.js" charset="UTF-8"></script>
     <script type="text/javascript" src="./js/model_ja.js" charset="UTF-8"></script>
-    <!-- <script type="text/javascript" src="./js/hanzenkaku.js" charset="UTF-8"></script>  -->
   </head>
   <style>
     body {
@@ -268,6 +267,8 @@
       uttr.pitch = pitch_val.value;
       uttr.voice = speechSynthesis.getVoices().filter(voice => voice.name === voiceSelect.value) [0]
       speechSynthesis.speak(uttr)
+      answer = "";
+      question = "";      
     }
 
     // 音声の選択
@@ -285,21 +286,28 @@
       });
     }
  
-    // 音声認識処理
     recognition.onresult = (event) => {
-      let finalTranscript = '';       // 確定した認識結果
       let interimTranscript = '';     // 暫定の認識結果（Androidでは、うまく機能しない）
+      let finalTranscript = '';       // 確定した認識結果
+      question = null;
+      if (speechSynthesis.speaking == true) {
+        recognition.stop();
+        answer = null;
+        return;
+      }      
       for (let i = event.resultIndex; i < event.results.length; i++) {
-          if (event.results[i].isFinal) {
-            finalTranscript = event.results[i][0].transcript;
-            question = finalTranscript;
-            if (question != null) {
-              textarea.value = question;
-              Send();
-            } 
-          } else {
-            interimTranscript = '';
-          }
+        if (event.results[i].isFinal) {
+          finalTranscript = event.results[i][0].transcript;
+        } else {
+          interimTranscript = '';
+        }
+      }
+      question = finalTranscript;
+      if (question.length > 0) {
+        if (question != undefined) {
+          textarea.value = question;
+          Send();
+        }
       }
     }
 
