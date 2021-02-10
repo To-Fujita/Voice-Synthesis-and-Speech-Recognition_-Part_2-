@@ -31,6 +31,7 @@
       const resultDiv = document.querySelector('#result-div');
       const status_Data = document.getElementById('statusData');
       let Speech_flag = 0;
+      let Temp_Data = ' ';
       
       SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
       let recognition = new SpeechRecognition();
@@ -43,17 +44,19 @@
       let transcript = '';
     
       recognition.onresult = (event) => {
-        interimTranscript = '';   // 暫定の認識結果
+        let interimTranscript = '';   // 暫定の認識結果
         for (var i = event.resultIndex; i < event.results.length; i++) {
           let transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
-            finalTranscript += transcript + '　';
+            finalTranscript += transcript;
           } else {
             interimTranscript = '';
           }
         }
         // resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';       
-        resultDiv.innerHTML = finalTranscript;
+        Temp_Data = Temp_Data + finalTranscript + '　';
+        resultDiv.innerHTML = Temp_Data;
+        finalTranscript = '';
       }
 
       recognition.onstart = (event) => {
