@@ -275,15 +275,16 @@
       });
     }
  
-    SpeechSynthesis.onstart = (event) => {
+    if (speechSynthesis.speaking == true) {
       if (Flag_Talk == 1) {
         recognition.stop();
+        question = null;
       } 
     }
-
-    SpeechSynthesis.onend = (event) => {
+    else {
       if (Flag_Talk == 1) {
         recognition.start();
+        answer = "";
       } 
     }
 
@@ -300,10 +301,9 @@
         }
       }
       question = finalTranscript;
-      if (question != null || question != "") {
+      if (question.length > 0) {
         if (question != undefined) {
           textarea.value = question;
-          alert("(" + question + ")");
           Send();
         }
       }
