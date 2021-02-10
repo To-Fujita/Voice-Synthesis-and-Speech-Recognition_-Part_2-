@@ -53,7 +53,8 @@
           }
         }       
         Temp_Data = Temp_Data + '　' + finalTranscript;
-        resultDiv.innerHTML = finalTranscript;
+        // resultDiv.innerHTML = finalTranscript;
+        resultDiv.innerHTML = Temp_Data;
         finalTranscript = '';
       }
 
@@ -63,7 +64,7 @@
 
       recognition.onend = (event) => {
         if (Speech_flag == 1) {
-          transcript = '';
+          finalTranscript = '';
           recognition.start();
         } 
       }
