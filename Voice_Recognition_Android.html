@@ -40,15 +40,16 @@
       recognition.continuous = true;
     
       let finalTranscript = '';       // 確定した認識結果
+      let transcript = '';
     
       recognition.onresult = (event) => {
-        // let interimTranscript = '';   // 暫定の認識結果
+        interimTranscript = '';   // 暫定の認識結果
         for (var i = event.resultIndex; i < event.results.length; i++) {
           let transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
             finalTranscript += transcript + '　';
           } else {
-            // interimTranscript = transcript;
+            interimTranscript = '';
           }
         }
         // resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';       
@@ -61,6 +62,7 @@
 
       recognition.onend = (event) => {
         if (Speech_flag == 1) {
+          transcript = '';
           recognition.start();
         } 
       }
