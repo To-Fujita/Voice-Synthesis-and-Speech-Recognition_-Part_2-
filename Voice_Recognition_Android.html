@@ -54,10 +54,10 @@
           }
         }
         // resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';       
-        Temp_Data = Temp_Data + '　' + finalTranscript;
-        resultDiv.innerHTML = Temp_Data;
+        // Temp_Data = Temp_Data + '　' + finalTranscript;
+        resultDiv.innerHTML = finalTranscript;
         finalTranscript = '';
-        transcript = '';
+        // transcript = '';
       }
 
       recognition.onstart = (event) => {
