@@ -42,18 +42,18 @@
         
       recognition.onresult = (event) => {
         let interimTranscript = '';     // 暫定の認識結果
-        let finalTranscript = '';       // 確定した認識結果
+        let finalTranscript = '';       // 確定した認識結果（Androidでは、うまく機能しない）
         for (var i = event.resultIndex; i < event.results.length; i++) {
-          let transcript = event.results[i][0].transcript;
+          // let transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
-            finalTranscript += transcript;
+            finalTranscript = event.results[i][0].transcript;
           } else {
             interimTranscript = '';
           }
         }       
         Temp_Data = Temp_Data + '　' + finalTranscript;
-        resultDiv.innerHTML = finalTranscript;
-        // resultDiv.innerHTML = Temp_Data;
+        // resultDiv.innerHTML = finalTranscript;
+        resultDiv.innerHTML = Temp_Data;
       }
 
       recognition.onstart = (event) => {
