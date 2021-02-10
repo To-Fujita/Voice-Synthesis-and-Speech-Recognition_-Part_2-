@@ -54,9 +54,10 @@
           }
         }
         // resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';       
-        Temp_Data = Temp_Data + finalTranscript + '　';
+        Temp_Data = Temp_Data + '　' + finalTranscript;
         resultDiv.innerHTML = Temp_Data;
         finalTranscript = '';
+        transcript = '';
       }
 
       recognition.onstart = (event) => {
