@@ -17,13 +17,15 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 [音声認識（Windows10用）のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Recognition.html)  
 [音声認識（Android用）のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Recognition_Android.html)  
 
-### 2-3: 音声合成と音声認識を使用した人口無脳との会話（TinySegmenter 版）
-「Voice_Synthesis_and_Recognition_001.html」がTinySegmenterを使用した人口無脳との会話プログラムです。　簡単な人口無脳ですので、シナリオに沿った受け答えしかできませんが、ご自身で会話データを作成し読み込ませることで拡張できるようにしています。　会話データは、「./Data/Talk_List_002.csv」を参考に、エクセル等でA列にあなたの言葉や質問を、B列以降に人口無脳からの返答を数個記載（任意の返答がランダムに返されることになる）して作成して下さい。　なお、作成した会話データは、csv形式、Shift-JISでローカルに保存して下さい。　プログラムの上部にファイル選択がありますので、そこから作成した会話データを読み込むことになります。　次のリンクで人口無脳のデモが確認できます。  
-[TinySegmenterによる人工無脳のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_001.html)  
+### 2-3: 音声合成と音声認識を使用した人工無脳との会話（TinySegmenter 版）
+「Voice_Synthesis_and_Recognition_001.html」がTinySegmenterを使用した人工無脳との会話プログラムです。　簡単な人工無脳ですので、シナリオに沿った受け答えしかできませんが、ご自身で会話データを作成し読み込ませることで拡張できるようにしています。　会話データは、「./Data/Talk_List_002.csv」を参考に、エクセル等でA列にあなたの言葉や質問を、B列以降に人工無脳からの返答を数個記載（任意の返答がランダムに返されることになる）して作成して下さい。　なお、作成した会話データは、csv形式、Shift-JISでローカルに保存して下さい。　プログラムの上部にファイル選択がありますので、そこから作成した会話データを読み込むことになります。　次のリンクであいさつ程度に対応した簡易人工無脳のデモが確認できます。　これもWindows10用とAndroid用のデモをそれぞれ準備しました。  
+[TinySegmenterによる人工無脳のデモ（Windows10用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_001.html)  
+[TinySegmenterによる人工無脳のデモ（Android用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_001_Android.html)  
 
-### 2-4: 音声合成と音声認識を使用した人口無脳との会話（RakutenMA 版）
-「Voice_Synthesis_and_Recognition_002.html」がRakutenMAを使用した人口無脳との会話プログラムです。　形態素解析エンジンが異なるだけで、扱いは上記2-3項と同様です。　次のリンクで音声認識のデモが確認できます。  
-[RakutenMAによる人工無脳のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_002.html)  
+### 2-4: 音声合成と音声認識を使用した人工無脳との会話（RakutenMA 版）
+「Voice_Synthesis_and_Recognition_002.html」がRakutenMAを使用した人工無脳との会話プログラムです。　形態素解析エンジンが異なるだけで、扱いは上記2-3項と同様です。　次のリンクでWindows10用とAndroid用それぞれの音声認識のデモが確認できます。  
+[RakutenMAによる人工無脳のデモ（Windows10用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_002.html)  
+[RakutenMAによる人工無脳のデモ（Android用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_002_Android.html)  
 
 ### おまけ：
 フリーの形態素解析エンジンには、「Kuromoji」もありますが、辞書が充実している分処理が重くなるようで、上記と同様なプログラムでは一拍遅れてしまいました。  
@@ -33,6 +35,7 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 [RakutenMA](https://github.com/rakuten-nlp/rakutenma/blob/master/README-ja.md) 形態素解析エンジン  
 [TinySegmenter](http://chasen.org/~taku/software/TinySegmenter/) 形態素解析エンジン  
 [Kuromoji](https://www.atilika.com/ja/kuromoji/)形態素解析エンジン  
+[]()
 
 ## 4. License
 MIT  
