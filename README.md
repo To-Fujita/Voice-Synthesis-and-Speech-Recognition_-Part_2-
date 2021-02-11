@@ -13,7 +13,7 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 [音声合成のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis.html)  
 
 ### 2-2: 音声認識
-「Voice_Recognition.html」が標準入力デバイスであるマイクから入力された音声を文字で表示するプログラムです。　使用できるプラウザは、現在のところGoogle Chromeのみのようです。　また、一般的な設定では、日本語の入力にのみ対応しており、次のリンクで音声認識のデモが確認できます。　なお、Windows10とAndroidでWeb Speech APIの挙動が若干異なるようですので、Windows10用とAndroid用のデモをそれぞれ準備しました。  
+「Voice_Recognition.html」が標準入力デバイスであるマイクから入力された音声を文字で表示するプログラムです。　使用できるプラウザは、現在のところGoogle Chromeのみのようです。　また、一般的な設定では、日本語の入力にのみ対応しており、次のリンクで音声認識のデモが確認できます。　なお、Windows10とAndroidでWeb Speech APIあるいはGoogle Chromeの挙動が若干異なるようですので、Windows10用とAndroid用のデモをそれぞれ準備しました。  
 [音声認識（Windows10用）のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Recognition.html)  
 [音声認識（Android用）のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Recognition_Android.html)  
 
