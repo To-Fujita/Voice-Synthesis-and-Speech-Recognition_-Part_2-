@@ -2,7 +2,7 @@
 These are part-2 of voice synthesis and speech recognition programs. In this part, I had created some programs by HTML and JavaScript. It is also the language that can be recognized is only Japanese.
 
 ## 1. Description
-　無料で使用可能な音声合成と音声認識プログラムの（その２）をお届けします。　本プログラムは、HTMLとJavaScriptで作成しました。　音声合成／音声認識エンジンは、Web Speech APIを使用しました。　また、人工無脳用形態素解析エンジンには、「TinySegmenter」および「RakutenMA」を使用しました。
+　無料で使用可能な音声合成と音声認識プログラムの（その２）をお届けします。　本プログラムは、HTMLとJavaScriptで作成しました。　音声合成／音声認識エンジンは、Web Speech APIを使用しました。　また、人工無脳用形態素解析エンジンには、「TinySegmenter」および「RakutenMA」を使用しています。
 
 ## 2. Details and Demo
 　本プログラムは、４つのパートから構成されており、上記「Code」から一括ダウンロードできます。　また、次のメニューからそれぞれのデモを確認することができます。　これらのデモは、Windows10日本語版で動作を確認しています。　以下にそれぞれのパートについて説明します。  
