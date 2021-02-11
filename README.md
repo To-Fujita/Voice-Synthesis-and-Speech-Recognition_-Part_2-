@@ -28,7 +28,7 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 [RakutenMAによる人工無脳のデモ（Android用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_002_Android.html)  
 
 ### おまけ：
-フリーの形態素解析エンジンには、「Kuromoji」もありますが、辞書が充実している分処理が重くなるようで、上記と同様なプログラムでは反応が一拍遅れてしまいました。  
+フリーの形態素解析エンジンには、「Kuromoji」もありますが、詳細な形態素解析が可能で辞書が充実している分処理が重くなるようで、上記と同様なプログラムでは反応が一拍遅れてしまいました。  
 
 ## 3. Reference
 [Web Speech API](https://developer.mozilla.org/ja/docs/Web/API/Web_Speech_API)
