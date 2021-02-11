@@ -341,6 +341,18 @@
       } 
     }
 
+    uttr.start = function() {
+      if (Flag_Talk == 1) {
+        recognition.stop();
+      }       
+    }
+
+    uttr.onend = function(event) {
+      if (Flag_Talk == 1) {
+        recognition.start();
+      } 
+    }
+
     // for rakutenma
     var rma = new RakutenMA(model_ja);
     
