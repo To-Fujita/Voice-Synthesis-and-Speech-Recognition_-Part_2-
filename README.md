@@ -35,7 +35,7 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 [RakutenMA](https://github.com/rakuten-nlp/rakutenma/blob/master/README-ja.md) 形態素解析エンジン  
 [TinySegmenter](http://chasen.org/~taku/software/TinySegmenter/) 形態素解析エンジン  
 [Kuromoji](https://www.atilika.com/ja/kuromoji/)形態素解析エンジン  
-[]()
+[Voice Synthesis and Speech Recognition (Part-1)]()
 
 ## 4. License
 MIT  
