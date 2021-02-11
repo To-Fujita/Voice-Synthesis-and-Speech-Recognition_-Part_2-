@@ -40,7 +40,7 @@
       <span style="vertical-align:2em">入力枠：</span>
     </font>
     <textarea class="box" id="text_in" rows= "3" cols="60">これは、形態素解析テストです。　ここに入力した文章を解析します。</textarea>
-    <br/>
+    <br/><br/>
     <input class="button_01" type="submit" value="形態素解析" onclick="Segment()">　
     <input class="button_01" type="submit" value="クリア" onclick="Clear()">　
     <input class="button_01" type="submit" value="送　信" onclick="Send()">　
@@ -306,8 +306,8 @@
       let interimTranscript = '';     // 暫定の認識結果（Androidでは、うまく機能しない）
       let finalTranscript = '';       // 確定した認識結果
       question = null;
-      if (speechSynthesis.speaking == true) {
-        recognition.stop();
+      if (speechSynthesis.speaking) {
+        // recognition.stop();
         answer = null;
         return;
       }      
@@ -322,7 +322,9 @@
       if (question.length > 0) {
         if (question != undefined) {
           textarea.value = question;
-          Send();
+          if ( !speechSynthesis.speaking ) {
+            Send();
+          }
         }
       }
     }

@@ -1,29 +1,34 @@
 <!doctype html>
 <html>
   <head>
-      <meta charset="utf-8">
-      <title>Voice Recognition Test - 2021/02/02 by T. Fujita</title>
+    <meta charset="utf-8">
+    <title>Voice Recognition Test - 2021/02/02 by T. Fujita</title>
   </head>
   <style>
-     body {
+    body {
       background-image: url(./Data/kareem-roberts-LuoGb_Lgfk8-2615x1743.jpg);
       background-size: cover;
+    }
+    input.button_01 {
+      font-size: 1.7em;
+      padding: 10px 10px;      
     }
   </style>
   <body>
     <center>
       <br/><br/>
       <font color="white">
-        <h2>音声認識テスト（対象ブラウザ： Google Chrome）</h2>
+        <h1>音声認識テスト（対象ブラウザ： Google Chrome）</h1>
       </font>
       <br/><br/>
-      <input type="submit" value="音声認識-開始" onclick="Start()">　　
-      <input type="submit" value="音声認識-終了" onclick="Stop()">　　
-      <font color="white">
-        <span id="statusData">　音声認識停止中</span>
+      <input class="button_01" type="submit" value="音声認識-開始" onclick="Start()">　　
+      <input class="button_01" type="submit" value="音声認識-終了" onclick="Stop()">　　
+      <font color="white" size="6">
+        <span id="statusData">音声認識停止中　　</span>
       </font>
+      <input class="button_01" type="submit" value="入力文字-消去" onclick="Clear()">
       <br/><br/>
-      <font color="red">
+      <font color="red" size="6">
         <div id="result-div"></div>
       </font>
     </center>
@@ -54,21 +59,26 @@
       }
 
       recognition.onstart = (event) => {
-        status_Data.innerHTML = "　音声認識実行中";
+        status_Data.innerHTML = "音声認識実行中　　";
       }
 
       recognition.onend = (event) => {
-        status_Data.innerHTML = "　音声認識停止中";
+        status_Data.innerHTML = "音声認識停止中　　";
       }
      
       function Start() {
-        status_Data.innerHTML = "　音声認識実行中";
+        status_Data.innerHTML = "音声認識実行中　　";
         recognition.start();
       }
 
       function Stop() {
-        status_Data.innerHTML = "　音声認識停止中";
+        status_Data.innerHTML = "音声認識停止中　　";
         recognition.stop();
+      }
+
+      function Clear() {
+        finalTranscript = '';
+        resultDiv.innerHTML = finalTranscript;
       }
     </script>
   </body>
