@@ -339,6 +339,10 @@
       } 
     }
 
+    recognition.onend = (event) => {
+      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
+    }
+
     // for Tiny Segmenter
     let segmenter = new TinySegmenter();
     
