@@ -96,7 +96,7 @@
     SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
     recognition = new SpeechRecognition();
     recognition.lang = 'ja-JP';
-    recognition.interimResults = true;
+    recognition.interimResults = false;
     recognition.continuous = false;
     
     // 形態素解析ボタンが押された時の処理
