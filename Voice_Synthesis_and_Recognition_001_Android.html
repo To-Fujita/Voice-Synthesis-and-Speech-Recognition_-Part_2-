@@ -330,31 +330,15 @@
     }
 
     uttr.start = (event) => {
-      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF</i>';
+      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
       recognition.stop();
     }
 
     uttr.onend = (event) => {
       if (Flag_Talk == 1) {
-        if (Temp_flag == 0) {
-          TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
-          setTimeout(recognition.start(), 5000);
-        }
-        else {
-          TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF</i>';
-          setTimeout(Restart(), 5000);
-        }
-      }
-    }
-
-    recognition.onaudioend = (event) => {
-      Temp_flag = 1;
-    }
-    
-    function Restart() {
-      Temp_flag = 0;
-      clearTimeout();
-      recognition.start();
+        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
+        setTimeout(recognition.start(), 5000);
+      } 
     }
 
     // for Tiny Segmenter
