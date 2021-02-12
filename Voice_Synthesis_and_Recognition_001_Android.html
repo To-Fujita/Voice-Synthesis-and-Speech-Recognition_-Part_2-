@@ -341,7 +341,8 @@
     uttr.onend = (event) => {
       if (Flag_Talk == 1) {
         TF_val.innerHTML = '<i style="color:#0000ff;"">音声認識 ON </i>';
-        recognition.start();
+        // recognition.start();
+        setTimeout(recognition.start(), 5000);
       } 
     }
 
