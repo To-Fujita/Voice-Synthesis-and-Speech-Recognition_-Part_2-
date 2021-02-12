@@ -119,7 +119,6 @@
       let temp = results.value;
       let words = textarea.value;
       let num;
-      answer = "";
 
       if (Talk_flag == 1) {
         words = question[question.length - 1];
@@ -310,7 +309,7 @@
         answer = null;
         return;
       }      
-      for (let i = event.resultIndex; i < event.results.length; i++) {
+      for (var i = event.resultIndex; i < event.results.length; i++) {
         if (event.results[i].isFinal) {
           finalTranscript = event.results[i][0].transcript;
         } else {
@@ -335,9 +334,9 @@
     }
 
     uttr.start = function(event) {
-      if (Flag_Talk == 1) {
+      // if (Flag_Talk == 1) {
         recognition.stop();
-      }       
+      // }       
     }
 
     uttr.onend = function(event) {
