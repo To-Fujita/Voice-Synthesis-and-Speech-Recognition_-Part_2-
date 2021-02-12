@@ -334,14 +334,12 @@
     }
 
     uttr.start = function(event) {
-      // if (Flag_Talk == 1) {
-        recognition.stop();
-      // }       
+      recognition.stop();
     }
 
     uttr.onend = function(event) {
       if (Flag_Talk == 1) {
-        recognition.start();
+        setTimeout(recognition.start(), 1000);
       } 
     }
 
