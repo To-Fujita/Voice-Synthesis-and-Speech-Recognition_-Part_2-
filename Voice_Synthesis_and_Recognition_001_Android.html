@@ -88,6 +88,7 @@
     let Flag_Talk = 0;
     let Flag_Speech = 0;
     let Talk_Data_Count;
+    let Temp_flag = 0;
 
     CSV_Read(Talk_Data_url);
     appendVoices()
@@ -238,7 +239,7 @@
       }
       else {
         Flag_Speech = 0;
-        SF_val.innerHTML = '<i style="color:#ff0000;">音声合成 OFF </i>';
+        SF_val.innerHTML = '<i style="color:#ff0000;">音声合成 OFF</i>';
       }
     }
 
@@ -251,7 +252,7 @@
       }
       else {
         Flag_Talk = 0;
-        TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
+        TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF</i>';
         recognition.stop();
       }
     }
@@ -325,22 +326,35 @@
           }
         }
       }
+      TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
     }
 
     uttr.start = (event) => {
-      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
+      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF</i>';
       recognition.stop();
     }
 
     uttr.onend = (event) => {
       if (Flag_Talk == 1) {
-        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
-        setTimeout(recognition.start(), 5000);
-      } 
+        if (Temp_flag == 0) {
+          TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
+          setTimeout(recognition.start(), 5000);
+        }
+        else {
+          TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF</i>';
+          setTimeout(Restart(), 5000);
+        }
+      }
     }
 
     recognition.onend = (event) => {
-      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
+      Temp_flag = 1;
+    }
+    
+    function Restart() {
+      Temp_flag = 0;
+      clearTimeout();
+      recognition.start();
     }
 
     // for Tiny Segmenter
