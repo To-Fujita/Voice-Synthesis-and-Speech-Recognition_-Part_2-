@@ -81,7 +81,7 @@
     const pauseBtn = document.querySelector('#pause-btn')
     const resumeBtn = document.querySelector('#resume-btn')
     let textarea = document.getElementById("text_in");
-    let recognition = new SpeechRecognition();
+    let recognition;
     let Talk_Data = [];
     let Talk_flag = [];
     let sentence;
@@ -94,6 +94,7 @@
     CSV_Read(Talk_Data_url);
     appendVoices()
     SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+    recognition = new SpeechRecognition();
     recognition.lang = 'ja-JP';
     recognition.interimResults = false;
     recognition.continuous = false;
