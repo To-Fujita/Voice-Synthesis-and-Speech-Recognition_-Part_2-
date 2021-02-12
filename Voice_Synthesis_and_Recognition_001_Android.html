@@ -330,8 +330,8 @@
 
     recognition.onend = (event) => {
       if (Flag_Talk == 1) {
-        recognition.start();
-        // setTimeout(recognition.start(), 1000);
+        // recognition.start();
+        setTimeout(recognition.start(), 1000);
       } 
     }
 
@@ -342,8 +342,8 @@
 
     uttr.onend = (event) => {
       if (Flag_Talk == 1) {
-        recognition.start();
-        // setTimeout(recognition.start(), 1000);
+        //recognition.start();
+        setTimeout(recognition.start(), 1000);
       } 
     }
 
