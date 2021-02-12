@@ -321,6 +321,7 @@
         if (question != undefined) {
           textarea.value = question;
           if ( !speechSynthesis.speaking ) {
+            recognition.stop();
             Send();
           }
         }
@@ -329,7 +330,7 @@
 
     recognition.onend = (event) => {
       if (Flag_Talk == 1) {
-        setTimeout(recognition.start(), 3000);
+        setTimeout(recognition.start(), 1000);
       } 
     }
 
@@ -339,7 +340,7 @@
 
     uttr.onend = function(event) {
       if (Flag_Talk == 1) {
-        setTimeout(recognition.start(), 3000);
+        setTimeout(recognition.start(), 1000);
       } 
     }
 
