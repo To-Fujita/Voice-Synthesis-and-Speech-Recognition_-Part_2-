@@ -318,10 +318,10 @@
       }
       question = finalTranscript;
       if (question.length > 0) {
+        recognition.stop();
         if (question != undefined) {
           textarea.value = question;
           if ( !speechSynthesis.speaking ) {
-            recognition.stop();
             Send();
           }
         }
@@ -335,6 +335,7 @@
     }
 
     uttr.start = function(event) {
+      alert("STOP");
       recognition.stop();
     }
 
