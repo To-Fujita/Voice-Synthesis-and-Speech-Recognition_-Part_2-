@@ -81,6 +81,7 @@
     const pauseBtn = document.querySelector('#pause-btn')
     const resumeBtn = document.querySelector('#resume-btn')
     let textarea = document.getElementById("text_in");
+    let recognition = new SpeechRecognition();
     let Talk_Data = [];
     let Talk_flag = [];
     let sentence;
@@ -88,13 +89,11 @@
     let question;
     let Flag_Talk = 0;
     let Flag_Speech = 0;
-    let recognition;
-    var Talk_Data_Count;
+    let Talk_Data_Count;
 
     CSV_Read(Talk_Data_url);
     appendVoices()
     SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
-    recognition = new SpeechRecognition();
     recognition.lang = 'ja-JP';
     recognition.interimResults = false;
     recognition.continuous = false;
@@ -330,18 +329,20 @@
 
     recognition.onend = (event) => {
       if (Flag_Talk == 1) {
-        setTimeout(recognition.start(), 1000);
+        recognition.start();
+        // setTimeout(recognition.start(), 1000);
       } 
     }
 
-    uttr.start = function(event) {
+    uttr.start = (event) => {
       alert("STOP");
       recognition.stop();
     }
 
-    uttr.onend = function(event) {
+    uttr.onend = (event) => {
       if (Flag_Talk == 1) {
-        setTimeout(recognition.start(), 1000);
+        recognition.start();
+        // setTimeout(recognition.start(), 1000);
       } 
     }
 
