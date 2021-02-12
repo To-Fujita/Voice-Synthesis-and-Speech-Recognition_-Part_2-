@@ -91,16 +91,15 @@
     let question;
     let Flag_Talk = 0;
     let Flag_Speech = 0;
-    let recognition;
     var Talk_Data_Count;
 
     CSV_Read(Talk_Data_url);
     TXT_Read(Learn_Data_url);
     appendVoices()
     SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
-    recognition = new SpeechRecognition();
+    let recognition = new SpeechRecognition();
     recognition.lang = 'ja-JP';
-    recognition.interimResults = true;
+    recognition.interimResults = false;
     recognition.continuous = false;
     
     // 形態素解析ボタンが押された時の処理
@@ -123,11 +122,9 @@
       let temp = results.value;
       let words = textarea.value;
       let num;
-      let temp_01;
       var r = Math.floor(Math.random() * 10);
      
       if (Talk_flag == 1) {
-        temp_01 = question.length;
         words = question[question.length - 1];
       }
 
@@ -275,11 +272,11 @@
     function Fsynthesis() {
       if (Flag_Speech == 0) {
         Flag_Speech = 1;
-        SF_val.innerHTML = "音声合成 ON "; 
+        SF_val.innerHTML = '<i style="color:#0000ff;">音声合成 ON </i>'; 
       }
       else {
         Flag_Speech = 0;
-        SF_val.innerHTML = "音声合成 OFF";
+        SF_val.innerHTML = '<i style="color:#ff0000;">音声合成 OFF</i>';
       }
     }
 
@@ -287,12 +284,12 @@
     function Frecognition() {
       if (Flag_Talk == 0) {
         Flag_Talk = 1;
-        TF_val.innerHTML = "音声認識 ON ";
+        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
         recognition.start();
       }
       else {
         Flag_Talk = 0;
-        TF_val.innerHTML = "音声認識 OFF";
+        TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF</i>';
         recognition.stop();
       }
     }
@@ -367,21 +364,15 @@
       }
     }
 
-    recognition.onend = (event) => {
-      if (Flag_Talk == 1) {
-        recognition.start();
-      } 
+    uttr.start = (event) => {
+      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
+      recognition.stop();
     }
 
-    uttr.start = function(event) {
+    uttr.onend = (event) => {
       if (Flag_Talk == 1) {
-        recognition.stop();
-      }       
-    }
-
-    uttr.onend = function(event) {
-      if (Flag_Talk == 1) {
-        recognition.start();
+        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
+        setTimeout(recognition.start(), 5000);
       } 
     }
 

@@ -98,7 +98,7 @@
     SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
     recognition = new SpeechRecognition();
     recognition.lang = 'ja-JP';
-    recognition.interimResults = true;
+    recognition.interimResults = false;
     recognition.continuous = false;
     
     // 形態素解析ボタンが押された時の処理
@@ -121,10 +121,8 @@
       let temp = results.value;
       let words = textarea.value;
       let num;
-      let temp_01;
 
       if (Talk_flag == 1) {
-        temp_01 = question.length;
         words = question[question.length - 1];
       }
 
@@ -244,11 +242,11 @@
     function Fsynthesis() {
       if (Flag_Speech == 0) {
         Flag_Speech = 1;
-        SF_val.innerHTML = "音声合成 ON "; 
+        SF_val.innerHTML = '<i style="color:#0000ff;">音声合成 ON </i>'>; 
       }
       else {
         Flag_Speech = 0;
-        SF_val.innerHTML = "音声合成 OFF";
+        SF_val.innerHTML = '<i style="color:#ff0000;">音声合成 OFF</i>'>;
       }
     }
 
@@ -256,12 +254,12 @@
     function Frecognition() {
       if (Flag_Talk == 0) {
         Flag_Talk = 1;
-        TF_val.innerHTML = "音声認識 ON ";
+        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>'>;
         recognition.start();
       }
       else {
         Flag_Talk = 0;
-        TF_val.innerHTML = "音声認識 OFF";
+        TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF</i>'>;
         recognition.stop();
       }
     }
@@ -307,7 +305,8 @@
         voiceSelect.appendChild(option)
       });
     }
- 
+
+    // 音声認識処理    
     recognition.onresult = (event) => {
       let interimTranscript = '';     // 暫定の認識結果（Androidでは、うまく機能しない）
       let finalTranscript = '';       // 確定した認識結果
@@ -335,21 +334,15 @@
       }
     }
 
-    recognition.onend = (event) => {
-      if (Flag_Talk == 1) {
-        recognition.start();
-      } 
+    uttr.start = (event) => {
+      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
+      recognition.stop();
     }
 
-    uttr.start = function(event) {
+    uttr.onend = (event) => {
       if (Flag_Talk == 1) {
-        recognition.stop();
-      }       
-    }
-
-    uttr.onend = function(event) {
-      if (Flag_Talk == 1) {
-        recognition.start();
+        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
+        setTimeout(recognition.start(), 5000);
       } 
     }
 
@@ -366,10 +359,7 @@
     function Keitaiso(words) {
       rma.featset = RakutenMA.default_featset_ja;
       rma.hash_func = RakutenMA.create_hash_func(15);
-      // 半角文字をそのままで使用する場合
       var token = rma.tokenize(words);
-      // 半角文字を全角に変換する場合
-      //tokens = rma.tokenize(HanZenKaku.hs2fs(HanZenKaku.hw2fw(HanZenKaku.h2z(textarea.value)))); 
       return token;
     }
 

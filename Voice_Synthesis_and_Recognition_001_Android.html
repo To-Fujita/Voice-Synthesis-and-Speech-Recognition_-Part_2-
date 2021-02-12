@@ -234,11 +234,11 @@
     function Fsynthesis() {
       if (Flag_Speech == 0) {
         Flag_Speech = 1;
-        SF_val.innerHTML = '<i style="color:#0000ff;"">音声合成 ON </i>'; 
+        SF_val.innerHTML = '<i style="color:#0000ff;">音声合成 ON </i>'; 
       }
       else {
         Flag_Speech = 0;
-        SF_val.innerHTML = '<i style="color:#ff0000;"">音声合成 OFF </i>';
+        SF_val.innerHTML = '<i style="color:#ff0000;">音声合成 OFF </i>';
       }
     }
 
@@ -246,12 +246,12 @@
     function Frecognition() {
       if (Flag_Talk == 0) {
         Flag_Talk = 1;
-        TF_val.innerHTML = '<i style="color:#0000ff;"">音声認識 ON </i>';
+        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
         recognition.start();
       }
       else {
         Flag_Talk = 0;
-        TF_val.innerHTML = '<i style="color:#ff0000;"">音声認識 OFF </i>';
+        TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
         recognition.stop();
       }
     }
@@ -327,21 +327,14 @@
       }
     }
 
-    recognition.onend = (event) => {
-      if (Flag_Talk == 1) {
-        // setTimeout(recognition.start(), 5000);
-      } 
-    }
-
     uttr.start = (event) => {
-      TF_val.innerHTML = '<i style="color:#ff0000;"">音声認識 OFF </i>';
+      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
       recognition.stop();
     }
 
     uttr.onend = (event) => {
       if (Flag_Talk == 1) {
-        TF_val.innerHTML = '<i style="color:#0000ff;"">音声認識 ON </i>';
-        // recognition.start();
+        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
         setTimeout(recognition.start(), 5000);
       } 
     }
