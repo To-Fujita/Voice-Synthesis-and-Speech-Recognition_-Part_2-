@@ -92,7 +92,6 @@
     let question;
     let Flag_Talk = 0;
     let Flag_Speech = 0;
-    var Talk_Data_Count;
     var dic;
 
     CSV_Read(Talk_Data_url);
@@ -212,7 +211,6 @@
 
     // 学習用txtファイル（UTF-8）の読み込み
     if(window.File) {
-      Talk_Data_Count = Talk_Data.length;
       var select = document.getElementById('select');
 	      select.addEventListener('change', function(e) {
 		      var fileData = e.target.files[0];
@@ -273,7 +271,7 @@
       for (var i=0; i<tmp.length; ++i) {
         Talk_Data[i] = tmp[i].split(',');
       }
-      Talk_Data_Count = Talk_Data.length;
+      
     }
 
     // 音声合成 ON/OFFボタンが押された時の処理
