@@ -2,126 +2,98 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="./css/Slider_01.css">
-    <title>Voice Synthesis and Recognition Test for Android - 2021/02/10 by T. Fujita</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="./css/botui.min.css" />
+    <link rel="stylesheet" href="./css/botui-theme-default.css" />    
+    <title>Voice Synthesis and Recognition with RakutenMA & BotUI - 2021/02/16 by T. Fujita</title>
     <script type="text/javascript" src="./js/rakutenma.js" charset="UTF-8"></script>
     <script type="text/javascript" src="./js/model_ja.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+    <script type="text/javascript" src="./js/botui.js"></script>    
   </head>
   <style>
     body {
-      background-image: url(./Data/revolt-BMest61rcqs-2615x1743.jpg);
+      background-image: url(./Data/kazden-cattapan-LKRSUMDI5NA-.jpg);
       background-size: cover;
-    }
-    input.button_01 {
-      font-size: 1.7em;
-      padding: 10px 10px;
-    }
-    input.button_02 {
-      font-size: 1.5em;
-      padding: 10px 10px;
     }
     textarea.box {
       font-size: 1.7em;
     }
-    select.sel {
-      font-size: 1.6em;
+    div.botui-app-container {
+      width: 80%;
+      height: 600px;
+      border: 1px solid #333333;
+    }
+    @media screen and (min-width:767px) {
+      div.botui-app-container {
+        width: 80%;
+        height: 400px;
+        border: 1px solid #333333;
+      }      
+    }
+    @media screen and (max-width:767px) {
+      div.botui-app-container {
+        width: 80%;
+        height: 500px;
+        border: 1px solid #333333;
+      }      
+    }
+    @media screen and (max-width:479px) {
+      div.botui-app-container {
+        width: 80%;
+        height: 500px;
+        border: 1px solid #333333;
+      }      
     }
   </style>
   <body>
   <center>
     <font color="black">
-      <h1>音声合成・認識 with rakutenma<br/>（対象ブラウザ： Google Chrome on Android）</h1>
+      <h3>音声合成・認識 with RakutenMA & BotUI<br/>（対象ブラウザ： Google Chrome）</h3>
     </font>
-    <font size="5">      
-      <label for""file">会話用csvファイル（Shift-JIS）の追加：　</label>
+    <font size="3">
+      <label for""file">会話用csvファイル（Shift-JIS）の追加読込：</label>
     </font>
-    <input class="button_02"  type="file" name="select" id="select">
+    <input type="file" name="select" id="select">
     <br/>
-    <font size="5" color="black">
-      <span style="vertical-align:2em">入力枠：</span>
-    </font>
-    <textarea class="box" id="text_in" rows= "3" cols="60">これは、形態素解析テストです。　ここに入力した文章を解析します。</textarea>
-    <br/><br/>
-    <input class="button_01" type="submit" value="形態素解析" onclick="Segment()">　
-    <input class="button_01" type="submit" value="クリア" onclick="Clear()">　
-    <input class="button_01" type="submit" value="送　信" onclick="Send()">　
-    <input class="button_01" type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">　
-    <input class="button_01" type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">
+    <input type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">
+    <font size="2"><span id="Speech_Flag">合成 OFF</span></font>　
+    <input type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">
+    <font size="2"><span id="Talk_Flag">認識 OFF</span></font>
     <br/>
-    <font size="5" color="black">
-      <span style="vertical-align:10em">出力枠：</span>
-    </font>
-    <textarea class="box" id="text_out" rows= "15" cols="60" readonly>ここに解析結果を表示します。
-      音声認識を使用する場合、一定時間無音で音声入力がオフになるようです。　その場合には「音声認識 ON/OFF」ボタンを押して、音声認識 ON にして下さい。</textarea>
-    <br/>
-    <select class="sel" id="voice-select"></select>
-    <br/>
-    <input id="rate" type="range" class="R_range" min="0" max="2" step="0.2" value="1"><font color="white" size="6"> (speed: <span id="current-value" >1.0</span>)</font>
-    <br/>
-    <input id="pitch" type="range" class="B_range" min="0" max="2" step="0.2" value="1"><font color="white" size="6"> (pitch : <span id="current-pitch">1.0</span>)</font>
-    <br/><br/>
-    <font color="white" size="6">
-      <span>音声設定状況：　</span>
-      <span id="Speech_Flag">音声合成 OFF</span>　
-      <span id="Talk_Flag">音声認識 OFF</span>
-    </font>
-  </center>
+  </center>  
+  <div class="botui-app-container" id="text_out">
+    <bot-ui></bot-ui>
+  </div>
+
   <script type = "text/javascript">
     const Talk_Data_url = "./Data/Talk_List_002_UTF8.csv";
-    const results = document.getElementById("text_out");
     const SF_val = document.getElementById("Speech_Flag")
     const TF_val = document.getElementById("Talk_Flag")
     const uttr = new SpeechSynthesisUtterance();
-    const voiceSelect = document.querySelector('#voice-select')
-    const speed = document.getElementById('rate')
-    const currentValueElem = document.getElementById('current-value')
-    const pitch_val = document.getElementById('pitch')
-    const currentPitchElem = document.getElementById('current-pitch')
-    const textData = document.querySelector('#text')
-    const speakBtn = document.querySelector('#speak-btn')
-    const cancelBtn = document.querySelector('#cancel-btn')
-    const pauseBtn = document.querySelector('#pause-btn')
-    const resumeBtn = document.querySelector('#resume-btn')
-    let textarea = document.getElementById("text_in");
+    let textarea;
     let Talk_Data = [];
     let Talk_flag = [];
+    let Data = [];
     let sentence = [];
     let partName = [];
     let answer;
     let question;
     let Flag_Talk = 0;
     let Flag_Speech = 0;
-    let recognition;
-    var Talk_Data_Count;
+    var botui = new BotUI('text_out');  // BOT UI の設定
+    var YourIcon = 0;
 
     CSV_Read(Talk_Data_url);
-    appendVoices()
     SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
-    recognition = new SpeechRecognition();
+    let recognition = new SpeechRecognition();
     recognition.lang = 'ja-JP';
     recognition.interimResults = false;
     recognition.continuous = false;
-    
-    // 形態素解析ボタンが押された時の処理
-    function Segment() {
-      RakutenMA_Segment(textarea.value);
-      textarea.scrollTop = textarea.scrollHeight;
-    }
-
-    // クリアボタンが押された時の処理
-    function Clear() {
-      results.value = "";
-      textarea.value = "";
-      interimTranscript = "";
-      finalTranscript = "";
-    } 
 
     // 送信ボタンが押された時の処理
     function Send() {
-      let results_Lines;
-      let temp = results.value;
-      let words = textarea.value;
-      let num;
+      let words = textarea;
 
       if (Talk_flag == 1) {
         words = question[question.length - 1];
@@ -130,30 +102,13 @@
       if (words == "" || words == null) {
         words = "　"; 
       }
-      num = temp.match(/\r\n/g);
-      num = temp.match(/\n/g)
-      if (num != null) {
-        results_Lines = num.length + 1;
-      }
-      else {
-        results_Lines = 1;
-      }
 
-      if (results_Lines > 100) {
-        results.value = ""; 
-      }
       CheckData(words);
-
-      if (results.value == "" || results.value == null) {
-        results.value = "\r\nあなた： " + words + "\r\n私： " + answer;
-      } else {
-        results.value = results.value + "\r\nあなた： " + words + "\r\n私： " + answer;
-      }
       interimTranscript = "";
       finalTranscript = "";
-      textarea.value = "";
-      // textarea.scrollTop = textarea.scrollHeight;
-      results.scrollTop = results.scrollHeight;
+      textarea = "";
+
+      bot_access();
       speech();
     }
 
@@ -163,11 +118,10 @@
         Talk_flag[i] = 0;
       }
       var Temp_sentence = Keitaiso(words);
-      // alert(Temp_sentence.length);
       for(var i=0; i<Temp_sentence.length; i++) {
         sentence[i] = Temp_sentence[i][0];
         partName[i] = Temp_sentence[i][1];
-      }
+      }      
       sentence.forEach(function(value){
         if (value != "、" || value != "。") {
           for(var i=0; i<Talk_Data.length; i++) {
@@ -219,7 +173,7 @@
 		      reader.readAsText(fileData, 'Shift_JIS');
 	      }, false);
     }      
-    
+
     // 基本会話データ（CSVファイル／UTF-8）の読み込み
     function CSV_Read(dataPath) {
       let reader = new XMLHttpRequest();
@@ -236,18 +190,17 @@
       for (var i=0; i<tmp.length; ++i) {
         Talk_Data[i] = tmp[i].split(',');
       }
-      Talk_Data_Count = Talk_Data.length;
     }
 
     // 音声合成 ON/OFFボタンが押された時の処理
     function Fsynthesis() {
       if (Flag_Speech == 0) {
         Flag_Speech = 1;
-        SF_val.innerHTML = '<i style="color:#0000ff;">音声合成 ON </i>'>; 
+        SF_val.innerHTML = '<i style="color:#0000ff;">合成 ON </i>'; 
       }
       else {
         Flag_Speech = 0;
-        SF_val.innerHTML = '<i style="color:#ff0000;">音声合成 OFF</i>'>;
+        SF_val.innerHTML = '<i style="color:#ff0000;">合成 OFF</i>';
       }
     }
 
@@ -255,59 +208,27 @@
     function Frecognition() {
       if (Flag_Talk == 0) {
         Flag_Talk = 1;
-        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>'>;
+        TF_val.innerHTML = '<i style="color:#0000ff;">認識 ON </i>';
         recognition.start();
       }
       else {
         Flag_Talk = 0;
-        TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF</i>'>;
+        TF_val.innerHTML = '<i style="color:#ff0000;">認識 OFF</i>';
         recognition.stop();
       }
     }
-
-    // 音声を変更した時の処理
-    speechSynthesis.onvoiceschanged = e => {
-      appendVoices()
-    }
-
-    // スライドバー変更時の処理
-    var rangeValue = function (elem, target) {
-      return function(evt) {
-        target.innerHTML = elem.value
-      }
-    }
-    
-    speed.addEventListener('input', rangeValue(speed, currentValueElem))
-    pitch_val.addEventListener('input', rangeValue(pitch_val, currentPitchElem))
 
     // 音声合成での発声
     function speech() {
       if (Flag_Speech == 0) {return}
       uttr.text = answer;
-      uttr.rate = speed.value;
-      uttr.pitch = pitch_val.value;
-      uttr.voice = speechSynthesis.getVoices().filter(voice => voice.name === voiceSelect.value) [0]
+      uttr.rate = 1.0;
+      uttr.pitch = 1.0;
       speechSynthesis.speak(uttr)
-      answer = "";
-      question = "";      
+      question = "";
     }
 
-    // 音声の選択
-    function appendVoices() {
-      const voices = speechSynthesis.getVoices()
-      voiceSelect.innerHTML = ''
-      voices.forEach(voice => {
-      // 日本語以外の声は選択肢に追加しない。
-       if(!voice.lang.match('ja')) return
-        const option = document.createElement('option')
-        option.value = voice.name
-        option.text  = `${voice.name} (${voice.lang})`
-        option.setAttribute('selected', voice.default)
-        voiceSelect.appendChild(option)
-      });
-    }
-
-    // 音声認識処理    
+    // 音声認識処理
     recognition.onresult = (event) => {
       let interimTranscript = '';     // 暫定の認識結果（Androidでは、うまく機能しない）
       let finalTranscript = '';       // 確定した認識結果
@@ -327,8 +248,9 @@
       question = finalTranscript;
       if (question.length > 0) {
         if (question != undefined) {
-          textarea.value = question;
+          textarea = question;
           if ( !speechSynthesis.speaking ) {
+            bot_input();
             Send();
           }
         }
@@ -336,26 +258,19 @@
     }
 
     uttr.start = (event) => {
-      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
+      TF_val.innerHTML = '<i style="color:#ff0000;">認識 OFF </i>';
       recognition.stop();
     }
 
     uttr.onend = (event) => {
       if (Flag_Talk == 1) {
-        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
+        TF_val.innerHTML = '<i style="color:#0000ff;">認識 ON </i>';
         setTimeout(recognition.start(), 5000);
       } 
     }
 
     // for rakutenma
     var rma = new RakutenMA(model_ja);
-    
-    function RakutenMA_Segment(words) {
-      rma.featset = RakutenMA.default_featset_ja;
-      rma.hash_func = RakutenMA.create_hash_func(15);
-      sentence = rma.tokenize(words);
-      results.value = sentence.join(" | ");
-    }
 
     function Keitaiso(words) {
       rma.featset = RakutenMA.default_featset_ja;
@@ -363,6 +278,91 @@
       var token = rma.tokenize(words);
       return token;
     }
+
+    // Bot UI
+    function init() {
+      botui.message.bot({
+        photo: true,
+        photo: './Data/レディーアイコン1R.svg',
+        content: '音声認識を使用する場合、一定時間無音で音声入力がオフになるようです。'
+      });
+
+      botui.message.bot({
+        delay: 500,
+        photo: true,
+        photo: './Data/レディーアイコン1R.svg',
+        content: 'その場合には「音声認識 ON/OFF」ボタンを押して、音声認識 ON にして下さい。'
+      });
+
+      botui.message.bot({
+        delay: 500,
+        content: 'あなたのアイコン（音声入力時用）を選択して下さい。'
+      }).then(function() {
+        return botui.action.button({
+          action: [{
+            text: '男性',
+            value: true
+          }, {
+            text: '女性',
+            value: false
+          }]
+        }).then(function(res) {
+          res.value ? SetMale() : SetFemale();
+        });
+      });
+    }   
+
+    function SetMale() {
+      YourIcon = 0;
+      answer = "何か入力して下さい。";
+      bot_access();
+    }
+
+    function SetFemale() {
+      YourIcon = 1;
+      answer = "何か入力して下さい。";
+      bot_access();
+    }
+
+  function bot_access() {
+    botui.message.bot({
+      photo: true,
+      photo: './Data/レディーアイコン1R.svg',
+      delay: 1000,
+      content: answer
+    }).then(function() {
+
+      return botui.action.text({
+        delay: 1500,
+        action: {
+          placeholder: 'ここに入力して下さい。'
+        }
+      });
+    }).then(function(res) {
+      textarea = res.value;
+      Send();
+    });
+  }
+
+  function bot_input() {
+    if (YourIcon == 0) {
+      botui.message.human({
+        photo: true,
+        photo: './Data/サラリーマン.svg',
+        content: textarea
+      });        
+    }
+    else {
+      botui.message.human({
+        photo: true,
+        photo: './Data/OL風の人物アイコン.svg',
+        content: textarea
+      });  
+    }
+    
+  }
+
+  window.onload = init;
 
   </script>
   </body>

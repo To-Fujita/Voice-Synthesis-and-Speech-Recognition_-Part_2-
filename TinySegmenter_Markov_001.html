@@ -176,7 +176,7 @@
 		      }
 		      reader.readAsText(fileData, 'UTF8');
 	      }, false);
-    }      
+    }
     
     // 基本学習データ（txtファイル／UTF-8）の読み込み
     function TXT_Read(dataPath) {
@@ -287,10 +287,6 @@
 
     // for Tiny Segmenter
     let segmenter = new TinySegmenter();
-    
-    function Tiny_Segment(words) {
-      sentence = segmenter.segment(words);
-    }
 
     function Keitaiso(words) {
       let TinySentence = segmenter.segment(words);
