@@ -35,14 +35,14 @@
     @media screen and (max-width:767px) {
       div.botui-app-container {
         width: 80%;
-        height: 600px;
+        height: 500px;
         border: 1px solid #333333;
       }      
     }
     @media screen and (max-width:479px) {
       div.botui-app-container {
         width: 80%;
-        height: 600px;
+        height: 500px;
         border: 1px solid #333333;
       }      
     }
@@ -58,9 +58,9 @@
     <input type="file" name="select" id="select">
     <br/>
     <input type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">
-    <font size="3"><span id="Speech_Flag">音声合成 OFF</span></font>　
+    <font size="2"><span id="Speech_Flag">合成 OFF</span></font>　
     <input type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">
-    <font size="3"><span id="Talk_Flag">音声認識 OFF</span></font>
+    <font size="2"><span id="Talk_Flag">認識 OFF</span></font>
     <br/>
   </center>  
   <div class="botui-app-container" id="text_out">
@@ -212,11 +212,11 @@
     function Fsynthesis() {
       if (Flag_Speech == 0) {
         Flag_Speech = 1;
-        SF_val.innerHTML = '<i style="color:#0000ff;">音声合成 ON </i>'; 
+        SF_val.innerHTML = '<i style="color:#0000ff;">合成 ON </i>'; 
       }
       else {
         Flag_Speech = 0;
-        SF_val.innerHTML = '<i style="color:#ff0000;">音声合成 OFF</i>';
+        SF_val.innerHTML = '<i style="color:#ff0000;">合成 OFF</i>';
       }
     }
 
@@ -224,12 +224,12 @@
     function Frecognition() {
       if (Flag_Talk == 0) {
         Flag_Talk = 1;
-        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
+        TF_val.innerHTML = '<i style="color:#0000ff;">認識 ON </i>';
         recognition.start();
       }
       else {
         Flag_Talk = 0;
-        TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF</i>';
+        TF_val.innerHTML = '<i style="color:#ff0000;">認識 OFF</i>';
         recognition.stop();
       }
     }
@@ -274,13 +274,13 @@
     }
 
     uttr.start = (event) => {
-      TF_val.innerHTML = '<i style="color:#ff0000;">音声認識 OFF </i>';
+      TF_val.innerHTML = '<i style="color:#ff0000;">認識 OFF </i>';
       recognition.stop();
     }
 
     uttr.onend = (event) => {
       if (Flag_Talk == 1) {
-        TF_val.innerHTML = '<i style="color:#0000ff;">音声認識 ON </i>';
+        TF_val.innerHTML = '<i style="color:#0000ff;">認識 ON </i>';
         setTimeout(recognition.start(), 5000);
       } 
     }
