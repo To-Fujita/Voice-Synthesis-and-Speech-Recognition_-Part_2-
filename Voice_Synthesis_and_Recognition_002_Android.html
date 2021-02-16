@@ -13,7 +13,7 @@
   </head>
   <style>
     body {
-      background-image: url(./Data/kazden-cattapan-LKRSUMDI5NA-.jpg);
+      background-image: url(./Data/revolt-BMest61rcqs-2615x1743.jpg);
       background-size: cover;
     }
     textarea.box {
@@ -57,9 +57,9 @@
     <input type="file" name="select" id="select">
     <br/>
     <input type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">
-    <font size="2"><span id="Speech_Flag">合成 OFF</span></font>　
+    <font size="2" color="red"><span id="Speech_Flag">合成 OFF</span></font>　
     <input type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">
-    <font size="2"><span id="Talk_Flag">認識 OFF</span></font>
+    <font size="2" color="red"><span id="Talk_Flag">認識 OFF</span></font>
     <br/>
   </center>  
   <div class="botui-app-container" id="text_out">
@@ -196,7 +196,7 @@
     function Fsynthesis() {
       if (Flag_Speech == 0) {
         Flag_Speech = 1;
-        SF_val.innerHTML = '<i style="color:#0000ff;">合成 ON </i>'; 
+        SF_val.innerHTML = '<i style="color:#ffffff;">合成 ON </i>'; 
       }
       else {
         Flag_Speech = 0;
@@ -208,7 +208,7 @@
     function Frecognition() {
       if (Flag_Talk == 0) {
         Flag_Talk = 1;
-        TF_val.innerHTML = '<i style="color:#0000ff;">認識 ON </i>';
+        TF_val.innerHTML = '<i style="color:#ffffff;">認識 ON </i>';
         recognition.start();
       }
       else {
@@ -264,7 +264,7 @@
 
     uttr.onend = (event) => {
       if (Flag_Talk == 1) {
-        TF_val.innerHTML = '<i style="color:#0000ff;">認識 ON </i>';
+        TF_val.innerHTML = '<i style="color:#ffffff;">認識 ON </i>';
         setTimeout(recognition.start(), 5000);
       } 
     }
