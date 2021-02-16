@@ -38,8 +38,8 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 [TinySegmenter](http://chasen.org/~taku/software/TinySegmenter/) 形態素解析エンジン  
 [Kuromoji](https://www.atilika.com/ja/kuromoji/)形態素解析エンジン  
 [Voice Synthesis and Speech Recognition (Part-1)](https://github.com/To-Fujita/Voice-Synthesis-and-Speech-Recognition_-Part_1-)　Visual StudioとSystem.Speechによる音声合成・音声認識プログラム  
-[Web AI](https://crocro.com/write/web_ai/wiki.cgi)  
-[Bot UI](https://github.com/botui/botui)  
+[Web AI](https://crocro.com/write/web_ai/wiki.cgi)JavaScriptライブラリ「Web AI」  
+[Bot UI](https://github.com/botui/botui)手軽にチャットボットを作ることができるjavascriptライブラリ  
 
 ## 4. License
 MIT  
