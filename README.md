@@ -33,13 +33,13 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 　フリーの形態素解析エンジンには、「Kuromoji」もありますが、詳細な形態素解析が可能で辞書が充実している分処理が重くなるようで、上記と同様なプログラムでは反応が一拍遅れてしまいました。  
 
 ## 3. Reference
-[Web Speech API](https://developer.mozilla.org/ja/docs/Web/API/Web_Speech_API)
-[RakutenMA](https://github.com/rakuten-nlp/rakutenma/blob/master/README-ja.md) 形態素解析エンジン  
-[TinySegmenter](http://chasen.org/~taku/software/TinySegmenter/) 形態素解析エンジン  
-[Kuromoji](https://www.atilika.com/ja/kuromoji/)形態素解析エンジン  
-[Voice Synthesis and Speech Recognition (Part-1)](https://github.com/To-Fujita/Voice-Synthesis-and-Speech-Recognition_-Part_1-)　Visual StudioとSystem.Speechによる音声合成・音声認識プログラム  
-[Web AI](https://crocro.com/write/web_ai/wiki.cgi)JavaScriptライブラリ「Web AI」  
-[Bot UI](https://github.com/botui/botui)手軽にチャットボットを作ることができるjavascriptライブラリ  
+[Web Speech API](https://developer.mozilla.org/ja/docs/Web/API/Web_Speech_API)：　音声合成・音声認識エンジン
+[RakutenMA](https://github.com/rakuten-nlp/rakutenma/blob/master/README-ja.md)：　形態素解析エンジン  
+[TinySegmenter](http://chasen.org/~taku/software/TinySegmenter/)：　形態素解析エンジン  
+[Kuromoji](https://www.atilika.com/ja/kuromoji/)：　形態素解析エンジン  
+[Voice Synthesis and Speech Recognition (Part-1)](https://github.com/To-Fujita/Voice-Synthesis-and-Speech-Recognition_-Part_1-)：　Visual StudioとSystem.Speechによる音声合成・音声認識プログラム  
+[Web AI](https://crocro.com/write/web_ai/wiki.cgi)：　JavaScriptライブラリ「Web AI」  
+[Bot UI](https://github.com/botui/botui)：　手軽にチャットボットを作ることができるjavascriptライブラリ  
 
 ## 4. License
 MIT  
