@@ -17,14 +17,6 @@
       background-image: url(./Data/kazden-cattapan-LKRSUMDI5NA-.jpg);
       background-size: cover;
     }
-    input.button_01 {
-      font-size: 1.7em;
-      padding: 10px 10px;
-    }
-    input.button_02 {
-      font-size: 1.5em;
-      padding: 10px 10px;
-    }
     textarea.box {
       font-size: 1.7em;
     }
@@ -36,21 +28,21 @@
     @media screen and (min-width:767px) {
       div.botui-app-container {
         width: 80%;
-        height: 300px;
+        height: 400px;
         border: 1px solid #333333;
       }      
     }
     @media screen and (max-width:767px) {
       div.botui-app-container {
         width: 80%;
-        height: 600px;
+        height: 400px;
         border: 1px solid #333333;
       }      
     }
     @media screen and (max-width:479px) {
       div.botui-app-container {
         width: 80%;
-        height: 600px;
+        height: 400px;
         border: 1px solid #333333;
       }      
     }
@@ -58,17 +50,17 @@
   <body>
   <center>
     <font color="black">
-      <h1>音声合成・認識 with tiny_segmenter, Web AI & BotUI<br/>（対象ブラウザ： Google Chrome）</h1>
+      <h4>音声合成・認識 with tiny_segmenter, Web AI & BotUI<br/>（対象ブラウザ： Google Chrome）</h4>
     </font>
-    <font size="5">
+    <font size="2">
       <label for""file">学習用txtファイル（UTF-8）の追加読込：</label>
     </font>
-    <input class="button_02" type="file" name="select" id="select">
+    <input type="file" name="select" id="select">
     <br/>
-    <input class="button_02" type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">　
-    <font size="5"><span id="Speech_Flag">音声合成 OFF</span></font>　　　
-    <input class="button_02" type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">　
-    <font size="5"><span id="Talk_Flag">音声認識 OFF</span></font>
+    <input type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">
+    <font size="2"><span id="Speech_Flag">音声合成 OFF</span></font>　
+    <input type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">
+    <font size="2"><span id="Talk_Flag">音声認識 OFF</span></font>
     <br/>
   </center>  
   <div class="botui-app-container" id="text_out">
