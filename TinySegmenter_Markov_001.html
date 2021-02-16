@@ -35,14 +35,14 @@
     @media screen and (max-width:767px) {
       div.botui-app-container {
         width: 80%;
-        height: 400px;
+        height: 600px;
         border: 1px solid #333333;
       }      
     }
     @media screen and (max-width:479px) {
       div.botui-app-container {
         width: 80%;
-        height: 400px;
+        height: 600px;
         border: 1px solid #333333;
       }      
     }
@@ -50,17 +50,17 @@
   <body>
   <center>
     <font color="black">
-      <h4>音声合成・認識 with tiny_segmenter, Web AI & BotUI<br/>（対象ブラウザ： Google Chrome）</h4>
+      <h3>音声合成・認識 with tiny_segmenter, Web AI & BotUI<br/>（対象ブラウザ： Google Chrome）</h3>
     </font>
-    <font size="2">
+    <font size="3">
       <label for""file">学習用txtファイル（UTF-8）の追加読込：</label>
     </font>
     <input type="file" name="select" id="select">
     <br/>
     <input type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">
-    <font size="2"><span id="Speech_Flag">音声合成 OFF</span></font>　
+    <font size="3"><span id="Speech_Flag">音声合成 OFF</span></font>　
     <input type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">
-    <font size="2"><span id="Talk_Flag">音声認識 OFF</span></font>
+    <font size="3"><span id="Talk_Flag">音声認識 OFF</span></font>
     <br/>
   </center>  
   <div class="botui-app-container" id="text_out">
