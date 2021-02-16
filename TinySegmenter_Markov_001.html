@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="./css/botui.min.css" />
     <link rel="stylesheet" href="./css/botui-theme-default.css" />    
-    <title>TinySegmenter, Web AI & BotUI for Android - 2021/02/15 by T. Fujita</title>
+    <title>TinySegmenter, Web AI & BotUI - 2021/02/15 by T. Fujita</title>
     <script src="./js/crocro.webAi.min.js"   type="text/javascript" charset="UTF-8"></script>
   	<script src="./js/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
     <script src="./js/tiny_segmenter-0.2.js" charset="UTF-8"></script>
@@ -27,14 +27,23 @@
     textarea.box {
       font-size: 1.7em;
     }
-    select.sel {
-      font-size: 1.6em;
+    div.botui-app-container {
+      width: 80%;
+      height: 300px;
+      border: 1px solid #333333;
+    }
+    @media screen and[max-width:480px] {
+      div.botui-app-container {
+        width: 80%;
+        height: 600px;
+        border: 1px solid #333333;
+      }      
     }
   </style>
   <body>
   <center>
     <font color="black">
-      <h1>音声合成・認識 with tiny_segmenter, Web AI & BotUI<br/>（対象ブラウザ： Google Chrome on Android）</h1>
+      <h1>音声合成・認識 with tiny_segmenter, Web AI & BotUI<br/>（対象ブラウザ： Google Chrome）</h1>
     </font>
     <font size="5">
       <label for""file">学習用txtファイル（UTF-8）の追加読込：</label>
@@ -46,12 +55,10 @@
     <input class="button_02" type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">　
     <font size="5"><span id="Talk_Flag">音声認識 OFF</span></font>
     <br/>
-    <select class="sel" id="voice-select"></select>
-    <br/>
-    <div class="botui-app-container" id="text_out" style="border: 1px solid #333333;">
-      <bot-ui></bot-ui>
-    </div>
-  </center>
+  </center>  
+  <div class="botui-app-container" id="text_out">
+    <bot-ui></bot-ui>
+  </div>
 
   <script type = "text/javascript">
     const Talk_Data_url = "./Data/Talk_List_002_UTF8.csv";
@@ -59,7 +66,6 @@
     const SF_val = document.getElementById("Speech_Flag")
     const TF_val = document.getElementById("Talk_Flag")
     const uttr = new SpeechSynthesisUtterance();
-    const voiceSelect = document.querySelector('#voice-select');
     let textarea;
     let Talk_Data = [];
     let Talk_flag = [];
@@ -77,7 +83,6 @@
 
     CSV_Read(Talk_Data_url);
     TXT_Read(Learn_Data_url);
-    appendVoices()
     SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
     let recognition = new SpeechRecognition();
     recognition.lang = 'ja-JP';
@@ -222,35 +227,14 @@
       }
     }
 
-    // 音声を変更した時の処理
-    speechSynthesis.onvoiceschanged = e => {
-      appendVoices()
-    }
-
     // 音声合成での発声
     function speech() {
       if (Flag_Speech == 0) {return}
       uttr.text = answer;
       uttr.rate = 1.0;
       uttr.pitch = 1.0;
-      uttr.voice = speechSynthesis.getVoices().filter(voice => voice.name === voiceSelect.value) [0]
       speechSynthesis.speak(uttr)
       question = "";
-    }
-
-    // 音声の選択
-    function appendVoices() {
-      const voices = speechSynthesis.getVoices()
-      voiceSelect.innerHTML = ''
-      voices.forEach(voice => {
-      // 日本語以外の声は選択肢に追加しない。
-       if(!voice.lang.match('ja')) return
-        const option = document.createElement('option')
-        option.value = voice.name
-        option.text  = `${voice.name} (${voice.lang})`
-        option.setAttribute('selected', voice.default)
-        voiceSelect.appendChild(option)
-      });
     }
 
     // 音声認識処理
@@ -351,19 +335,19 @@
     function init() {
       botui.message.bot({
         photo: true,
-        photo: './Data/お嬢様のアイコン.svg',
+        photo: './Data/レディーアイコン1R.svg',
         content: '音声認識を使用する場合、一定時間無音で音声入力がオフになるようです。'
       });
 
       botui.message.bot({
-        delay: 1000,
+        delay: 500,
         photo: true,
-        photo: './Data/お嬢様のアイコン.svg',
+        photo: './Data/レディーアイコン1R.svg',
         content: 'その場合には「音声認識 ON/OFF」ボタンを押して、音声認識 ON にして下さい。'
       });
 
       botui.message.bot({
-        delay: 1000,
+        delay: 500,
         content: 'あなたのアイコン（音声入力時用）を選択して下さい。'
       }).then(function() {
         return botui.action.button({
@@ -395,13 +379,13 @@
   function bot_access() {
     botui.message.bot({
       photo: true,
-      photo: './Data/お嬢様のアイコン.svg',
-      delay: 500,
+      photo: './Data/レディーアイコン1R.svg',
+      delay: 1000,
       content: answer
     }).then(function() {
 
       return botui.action.text({
-        delay: 500,
+        delay: 1500,
         action: {
           placeholder: 'ここに入力して下さい。'
         }
