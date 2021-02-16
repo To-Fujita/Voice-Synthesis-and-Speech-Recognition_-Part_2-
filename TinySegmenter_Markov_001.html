@@ -2,9 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="./css/botui.min.css" />
     <link rel="stylesheet" href="./css/botui-theme-default.css" />    
-    <title>TinySegmenter, Web AI & BotUI - 2021/02/15 by T. Fujita</title>
+    <title>TinySegmenter, Web AI & BotUI - 2021/02/16 by T. Fujita</title>
     <script src="./js/crocro.webAi.min.js"   type="text/javascript" charset="UTF-8"></script>
   	<script src="./js/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
     <script src="./js/tiny_segmenter-0.2.js" charset="UTF-8"></script>
@@ -29,10 +30,24 @@
     }
     div.botui-app-container {
       width: 80%;
-      height: 300px;
+      height: 600px;
       border: 1px solid #333333;
     }
-    @media screen and[max-width:480px] {
+    @media screen and (min-width:767px) {
+      div.botui-app-container {
+        width: 80%;
+        height: 300px;
+        border: 1px solid #333333;
+      }      
+    }
+    @media screen and (max-width:767px) {
+      div.botui-app-container {
+        width: 80%;
+        height: 600px;
+        border: 1px solid #333333;
+      }      
+    }
+    @media screen and (max-width:479px) {
       div.botui-app-container {
         width: 80%;
         height: 600px;
