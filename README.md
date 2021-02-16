@@ -2,7 +2,7 @@
 These are part-2 of voice synthesis and speech recognition programs. In this part, I had created some programs by HTML and JavaScript. It is also the language that can be recognized is only Japanese.
 
 ## 1. Description
-　無料で使用可能な音声合成と音声認識プログラムの（その２）をお届けします。　本プログラムは、HTMLとJavaScriptで作成しました。　音声合成／音声認識エンジンは、Web Speech APIを使用しました。　また、人工無脳用形態素解析エンジンには、「TinySegmenter」および「RakutenMA」を使用しています。
+　無料で使用可能な音声合成と音声認識プログラムの（その２）をお届けします。　本プログラムは、HTMLとJavaScriptで作成しました。　音声合成／音声認識エンジンは、Web Speech APIを使用しました。　また、日本語のセパレータ、形態素解析エンジンには、「TinySegmenter」あるいは「RakutenMA」を使用しています。　さらに、「Web AI」のマルコフ連鎖で適当な文章を作成するバージョンや「Bot UI」を使用したバージョンも作成しました。　なお、ニュースや天気予報、ウキペディアの検索が可能な人工無脳を試みたい方は、[Voice Synthesis and Speech Recognition (Part-1)](https://github.com/To-Fujita/Voice-Synthesis-and-Speech-Recognition_-Part_1-)をご覧ください。  
 
 ## 2. Details and Demo
 　本プログラムは、４つのパートから構成されており、上記「Code」から一括ダウンロードできます。　また、次のメニューからそれぞれのデモを確認することができます。　これらのデモは、Windows10日本語版で動作を確認していますが、Android版も追加しました。　以下にそれぞれのパートについて説明します。  
@@ -19,7 +19,7 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 
 ### 2-3: 音声合成と音声認識を使用した人工無脳との会話（TinySegmenter 版）
 　「Voice_Synthesis_and_Recognition_001.html」がTinySegmenterを使用した人工無脳との会話プログラムです。　簡単な人工無脳ですので、シナリオに沿った受け答えしかできませんが、ご自身で会話データを作成し読み込ませることで拡張できるようにしています。　会話データは、「./Data/Talk_List_002.csv」を参考に、エクセル等でA列にあなたの言葉や質問を、B列以降に人工無脳からの返答を数個記載（任意の返答がランダムに返されることになる）して作成して下さい。　なお、作成した会話データは、csv形式、Shift-JISでローカルに保存して下さい。　プログラムの上部にファイル選択がありますので、そこから作成した会話データを読み込むことになります。　次のリンクであいさつ程度に対応した簡易人工無脳のデモが確認できます。  
- また、「Web AI」のマルコフ連鎖及び「Bot UI」を使用したデモも作成してみました。　なお、ニュースや天気予報、ウキペディアの検索が可能な人工無脳を試みたい方は、[Voice Synthesis and Speech Recognition (Part-1)](https://github.com/To-Fujita/Voice-Synthesis-and-Speech-Recognition_-Part_1-)をご覧ください。  
+　また、「Web AI」のマルコフ連鎖及び「Bot UI」を使用したデモも作成してみました。  
 [TinySegmenterによる人工無脳のデモ（Windows10用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_001.html)  
 [TinySegmenterによる人工無脳のデモ（Android用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_001_Android.html)  
 [TinySegmenter, Web AI and Bot UIによる人工無脳のデモへのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/TinySegmenter_Markov_001.html)  
