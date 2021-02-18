@@ -24,7 +24,7 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 [TinySegmenterによる人工無脳のデモ（Android用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_001_Android.html)  
 [TinySegmenter, Web AI and Bot UIによる人工無脳のデモ（Windows10／Android用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/TinySegmenter_Markov_001.html)  
   
-  なお、「TinySegmenter, Web AI and Bot UIによる人工無脳のデモ（Windows10／Android用）」では、マルコフ連鎖のベースとして学習用データ（UTF-8）を読み込むことが可能です。　学習用データとしては、例えば青空文庫からダウンロードしたテキストデータ（青空文庫のテキストデータは、キャラクタセットがShift-JISですので、メモ帳等のエディタでUTF-8に変換する必要があります）が使用できます。  
+  なお、「TinySegmenter, Web AI and Bot UIによる人工無脳のデモ（Windows10／Android用）」では、マルコフ連鎖のベースとして学習用データ（UTF-8）を読み込むことが可能です。　学習用データとしては、例えば青空文庫からダウンロードしたテキストデータが使用できます。（青空文庫のテキストデータは、キャラクタセットがShift-JISですので、メモ帳等のエディタでUTF-8に変換する必要があります。）  
 
 ### 2-4: 音声合成と音声認識を使用した人工無脳との会話（RakutenMA 版）
 　「Voice_Synthesis_and_Recognition_002.html」がRakutenMAを使用した人工無脳との会話プログラムです。　形態素解析エンジンが異なるだけで、扱いは上記2-3項と同様です。　次のリンクで形態素解析を表示可能なバージョン（Windows10用）とBot UIを使用したバージョンそれぞれの音声認識のデモが確認できます。  
