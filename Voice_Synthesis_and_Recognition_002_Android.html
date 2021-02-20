@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="./css/botui.min.css" />
     <link rel="stylesheet" href="./css/botui-theme-default.css" />    
-    <title>Voice Synthesis and Recognition with RakutenMA & BotUI - 2021/02/16 by T. Fujita</title>
+    <title>Voice Synthesis and Recognition with RakutenMA & BotUI - 2021/02/20 by T. Fujita</title>
     <script type="text/javascript" src="./js/rakutenma.js" charset="UTF-8"></script>
     <script type="text/javascript" src="./js/model_ja.js" charset="UTF-8"></script>
     <script type="text/javascript" src="./js/vue.min.js"></script>
-    <script type="text/javascript" src="./js/botui.js"></script>    
+    <script type="text/javascript" src="./js/botui.js"></script>
+    <script type="text/javascript" src="./js/encoding.min.js"></script>
   </head>
   <style>
     body {
@@ -52,7 +53,7 @@
       <h3>音声合成・認識 with RakutenMA & BotUI<br/>（対象ブラウザ： Google Chrome）</h3>
     </font>
     <font size="3">
-      <label for""file">会話用csvファイル（Shift-JIS）の追加読込：</label>
+      <label for""file">会話用csvファイルの追加読込：</label>
     </font>
     <input type="file" name="select" id="select">
     <br/>
@@ -164,13 +165,16 @@
 		      reader.onerror = function() {
 			      alert('ファイル読み取りに失敗しました')
 		      }
-		      reader.onload = function() {
-			      var lineArr = reader.result.split('\n');
+		      reader.onload = function(event) {
+			      var tmp = new Uint8Array(event.target.result);
+            var tmp_text = Encoding.convert(tmp, 'UNICODE', 'AUTO');
+            var txtArray = Encoding.codeToString(tmp_text);
+			      var lineArr = txtArray.split('\n');
 			      for (var i = 0; i < lineArr.length; i++) {
 				      Talk_Data[i + Talk_Data_Count] = lineArr[i].split(',');
 			      }
 		      }
-		      reader.readAsText(fileData, 'Shift_JIS');
+		      reader.readAsArrayBuffer(fileData);
 	      }, false);
     }      
 

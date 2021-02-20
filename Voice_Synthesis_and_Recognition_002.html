@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="./css/Slider.css">
-    <title>Voice Synthesis and Recognition Test - 2021/02/08 by T. Fujita</title>
+    <title>Voice Synthesis and Recognition Test - 2021/02/20 by T. Fujita</title>
     <script type="text/javascript" src="./js/rakutenma.js" charset="UTF-8"></script>
     <script type="text/javascript" src="./js/model_ja.js" charset="UTF-8"></script>
-    <!-- <script type="text/javascript" src="./js/hanzenkaku.js" charset="UTF-8"></script>  -->
+    <script type="text/javascript" src="./js/encoding.min.js"></script>
   </head>
   <style>
     body {
@@ -18,7 +18,7 @@
   <center>
     <font color="black">
       <h2>音声合成・認識 with rakutenma（対象ブラウザ： Google Chrome）</h2>
-      <label for""file">会話用csvファイル（Shift-JIS）の追加：　</label>
+      <label for""file">会話用csvファイルの追加：　</label>
       <input type="file" name="select" id="select">
     </font>
     <br/><font color="black"><span style="vertical-align:2em">入力枠：</span></font>
@@ -192,13 +192,16 @@
 		      reader.onerror = function() {
 			      alert('ファイル読み取りに失敗しました')
 		      }
-		      reader.onload = function() {
-			      var lineArr = reader.result.split('\n');
+		      reader.onload = function(event) {
+			      var tmp = new Uint8Array(event.target.result);
+            var tmp_text = Encoding.convert(tmp, 'UNICODE', 'AUTO');
+            var txtArray = Encoding.codeToString(tmp_text);
+			      var lineArr = txtArray.split('\n');
 			      for (var i = 0; i < lineArr.length; i++) {
 				      Talk_Data[i + Talk_Data_Count] = lineArr[i].split(',');
 			      }
 		      }
-		      reader.readAsText(fileData, 'Shift_JIS');
+		      reader.readAsArrayBuffer(fileData);
 	      }, false);
     }      
     

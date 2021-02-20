@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="./css/botui.min.css" />
     <link rel="stylesheet" href="./css/botui-theme-default.css" />    
-    <title>TinySegmenter, Web AI & BotUI - 2021/02/16 by T. Fujita</title>
+    <title>TinySegmenter, Web AI & BotUI - 2021/02/20 by T. Fujita</title>
     <script src="./js/crocro.webAi.min.js"   type="text/javascript" charset="UTF-8"></script>
   	<script src="./js/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
     <script src="./js/tiny_segmenter-0.2.js" charset="UTF-8"></script>
     <script src="./js/vue.min.js"></script>
-    <script src="./js/botui.js"></script>    
+    <script src="./js/botui.js"></script>
+    <script src="./js/encoding.min.js"></script>
   </head>
   <style>
     body {
@@ -53,7 +54,7 @@
       <h3>音声合成・認識 with tiny_segmenter, Web AI & BotUI<br/>（対象ブラウザ： Google Chrome）</h3>
     </font>
     <font size="3">
-      <label for""file">学習用txtファイル（UTF-8）の追加読込：</label>
+      <label for""file">学習用txtファイルの追加読込：</label>
     </font>
     <input type="file" name="select" id="select">
     <br/>
@@ -161,7 +162,7 @@
       answer= Talk_Data[qusNo][ansNo];
     }
 
-    // 学習用txtファイル（UTF-8）の読み込み
+    // 学習用txtファイル（Auto）の読み込み
     if(window.File) {
       var select = document.getElementById('select');
 	      select.addEventListener('change', function(e) {
@@ -170,18 +171,19 @@
 		      reader.onerror = function() {
 			      alert('ファイル読み取りに失敗しました')
 		      }
-		      reader.onload = function() {
-			      var tmp = reader.result;
-            Data.push(tmp);
+		      reader.onload = function(event) {
+			      var tmp = new Uint8Array(event.target.result);
+            var tmp_text = Encoding.convert(tmp, 'UNICODE', 'AUTO');
+            var txtArray = Encoding.codeToString(tmp_text);
+            Data.push(txtArray);
 		      }
-		      reader.readAsText(fileData, 'UTF8');
+		      reader.readAsArrayBuffer(fileData);
 	      }, false);
     }
     
     // 基本学習データ（txtファイル／UTF-8）の読み込み
     function TXT_Read(dataPath) {
       let reader = new XMLHttpRequest();
-      var str;
       reader.open("get", dataPath, true);
       reader.send(null);
       reader.onload = function() {
