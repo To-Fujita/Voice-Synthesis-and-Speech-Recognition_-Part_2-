@@ -7,6 +7,8 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 ## 2. Details and Demo
 　本プログラムは、４つのパートから構成されており、上記「Code」から一括ダウンロードできます。　また、次のメニューからそれぞれのデモを確認することができます。　これらのデモは、Windows10日本語版で動作を確認していますが、Android版も追加しました。　以下にそれぞれのパートについて説明します。  
  [デモ・メニュー](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/index.html)  
+ 
+ ![RakutenMA, Web AI and Bot UIによる人工無脳のデモ・イメージ](https://to-fujita.github.io/Images/Voice_Synthesis_and_Recognition_003.jpg "RakutenMA, Web AI and Bot UIによる人工無脳のデモ・イメージ")
 
 ### 2-1: 音声合成
 　「Voice_Synthesis.html」が入力された文字を読み上げるだけのシンプルなプログラムです。　本プログラムは、色々なプラウザに対応しており、プラウザによって使用できる音声が異なりますので、お楽しみください。　なお、一般的な設定では、日本語と英語に対応しています。　次のリンクで音声合成のデモが確認できます。  
