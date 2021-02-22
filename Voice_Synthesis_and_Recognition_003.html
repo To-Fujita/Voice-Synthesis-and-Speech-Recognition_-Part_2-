@@ -1,0 +1,466 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="./css/botui.min.css" />
+    <link rel="stylesheet" href="./css/botui-theme-default.css" />    
+    <title>Voice Synthesis and Recognition with RakutenMA & BotUI - 2021/02/22 by T. Fujita</title>
+    <script type="text/javascript" src="./js/rakutenma.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="./js/model_ja.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="./js/crocro.webAi.min.js"  charset="UTF-8"></script>
+  	<script type="text/javascript" src="./js/jquery.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+    <script type="text/javascript" src="./js/botui.js"></script>
+    <script type="text/javascript" src="./js/encoding.min.js"></script>
+  </head>
+  <style>
+    body {
+      background-image: url(./Data/revolt-BMest61rcqs-2615x1743.jpg);
+      background-size: cover;
+    }
+    textarea.box {
+      font-size: 1.7em;
+    }
+    div.botui-app-container {
+      width: 80%;
+      height: 600px;
+      border: 1px solid #333333;
+    }
+    @media screen and (min-width:767px) {
+      div.botui-app-container {
+        width: 80%;
+        height: 400px;
+        border: 1px solid #333333;
+      }      
+    }
+    @media screen and (max-width:767px) {
+      div.botui-app-container {
+        width: 80%;
+        height: 500px;
+        border: 1px solid #333333;
+      }      
+    }
+    @media screen and (max-width:479px) {
+      div.botui-app-container {
+        width: 80%;
+        height: 500px;
+        border: 1px solid #333333;
+      }      
+    }
+    img.pos_left {
+      position: fixed;
+      bottom: 0px;
+      left:0px;
+      opacity: 0.8
+    }
+    img.pos_right {
+      position: fixed;
+      bottom: 0px;
+      right: 0px;
+      opacity: 0.6;
+    }    
+  </style>
+  <body>
+  <center>
+    <font color="black">
+      <h3>音声合成・認識 with RakutenMA, Web AI & BotUI<br/>（対象ブラウザ： Google Chrome）</h3>
+    </font>
+    <font size="3">
+      <label for""file">学習用txtファイルの追加読込：</label>
+    </font>
+    <input type="file" name="select" id="select">
+    <br/>
+    <input type="submit" value="音声合成 ON/OFF" onclick="Fsynthesis()">
+    <font size="2" color="red"><span id="Speech_Flag">合成 OFF</span></font>　
+    <input type="submit" value="音声認識 ON/OFF" onclick="Frecognition()">
+    <font size="2" color="red"><span id="Talk_Flag">認識 OFF</span></font>
+    <br/>
+  </center>
+  <img class="pos_left" src="./Data/FD001_13.svg" alt="Droid" title="Droid-01" height="80%" border="0" style="display: block; margin-left: 0; margin-right: auto;">
+  <img class="pos_right" src="./Data/FD-003_01.svg" alt="Droid" title="Droid-02" height="80%" border="0" style="display: block; margin-left: auto; margin-right: 0;">
+  <div class="botui-app-container" id="text_out">
+    <bot-ui></bot-ui>
+  </div>
+
+  <script type = "text/javascript">
+    const Talk_Data_url = "./Data/Talk_List_002_UTF8.csv";
+    const Learn_Data_url = "./Data/Talk_List_002_UTF8.csv";
+    const SF_val = document.getElementById("Speech_Flag")
+    const TF_val = document.getElementById("Talk_Flag")
+    const uttr = new SpeechSynthesisUtterance();
+    let textarea;
+    let Talk_Data = [];
+    let Talk_flag = [];
+    let Data = [];
+    let sentence = [];
+    let partName = [];
+    let answer;
+    let question;
+    let Flag_Talk = 0;
+    let Flag_Speech = 0;
+    var botui = new BotUI('text_out');  // BOT UI の設定
+    var YourIcon = 0;
+    var $WA  = crocro.webAi;			      // 短縮表記
+		var cJpMrkv  = new $WA.JpMrkv();  	// マルコフ連鎖
+		var cJpSntnc = new $WA.JpSntnc(); 	// センテンス
+    var Base_Word = "あなた";
+
+    CSV_Read(Talk_Data_url);
+    TXT_Read(Learn_Data_url);
+    SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+    let recognition = new SpeechRecognition();
+    recognition.lang = 'ja-JP';
+    recognition.interimResults = false;
+    recognition.continuous = false;
+
+    // 送信ボタンが押された時の処理
+    function Send() {
+      let words = textarea;
+      var r = Math.floor(Math.random() * 10);
+
+      if (Talk_flag == 1) {
+        words = question[question.length - 1];
+      }
+
+      if (words == "" || words == null) {
+        words = "　"; 
+      }
+
+      var Temp_sentence = Keitaiso(words);
+      for(var i=0; i<Temp_sentence.length; i++) {
+        sentence[i] = Temp_sentence[i][0];
+        partName[i] = Temp_sentence[i][1];
+      }      
+
+      if(r > 5 && Data.length > 0) {
+        Base_Word = "";
+        for(var i=0; i<sentence.length; i++) {
+          if(Base_Word == "" && partName[i] == "D") {
+            Base_Word = sentence[i];
+            break;
+          } else if(Base_Word == "" && partName[i].slice(0, 1) == "N") {
+            Base_Word = sentence[i];
+            break;
+          } else if(Base_Word == "" && partName[i].slice(0, 1) == "I") {
+            Base_Word = sentence[i];
+            break;
+          }
+        }
+        answer = markov(Base_Word);
+      } else {
+        CheckData(words);
+      }
+      if(answer == undefined) {
+        CheckData(words);
+      }
+      interimTranscript = "";
+      finalTranscript = "";
+      textarea = "";
+
+      bot_access();
+      speech();
+    }
+
+    // 質問に対する答えを選択
+    function CheckData(words) {
+      for (var i=0; i<Talk_Data.length; i++) {
+        Talk_flag[i] = 0;
+      }
+      sentence.forEach(function(value){
+        if (value != "、" || value != "。") {
+          for(var i=0; i<Talk_Data.length; i++) {
+            if (Talk_Data[i][0].indexOf(value) >= 0) {
+              Talk_flag[i] = Talk_flag[i] + value.length;
+            }
+          }
+        }
+      });
+      let aryMax = function(a, b) {return Math.max(a, b);}
+      let max = Talk_flag.reduce(aryMax)
+      let Temp = [];
+      let count = 0;
+      let qusNo;
+      let ansNo;
+
+      for (var i=0; i<Talk_Data.length; i++) {
+        if(Talk_flag[i] == max) {
+          Temp[count] = i;
+          count = count + 1;
+        }
+      }
+      qusNo = Temp[Math.floor(Math.random() * count)];
+      count = 0;
+      for (var i=1; i<Talk_Data[qusNo].length; i++) {
+        if (Talk_Data[qusNo][i] != "")
+        count = count + 1;
+      }
+      ansNo = Math.floor(Math.random() * (count - 1) + 1);
+      answer= Talk_Data[qusNo][ansNo];
+    }
+
+    // 学習用txtファイル（Auto）の読み込み
+    if(window.File) {
+      var select = document.getElementById('select');
+	      select.addEventListener('change', function(e) {
+		      var fileData = e.target.files[0];
+		      var reader = new FileReader();
+		      reader.onerror = function() {
+			      alert('ファイル読み取りに失敗しました')
+		      }
+		      reader.onload = function(event) {
+			      var tmp = new Uint8Array(event.target.result);
+            var tmp_text = Encoding.convert(tmp, 'UNICODE', 'AUTO');
+            var txtArray = Encoding.codeToString(tmp_text);
+            Data.push(txtArray);
+		      }
+		      reader.readAsArrayBuffer(fileData);
+	      }, false);
+    }
+
+    // 基本学習データ（txtファイル／UTF-8）の読み込み
+    function TXT_Read(dataPath) {
+      let reader = new XMLHttpRequest();
+      reader.open("get", dataPath, true);
+      reader.send(null);
+      reader.onload = function() {
+        var tmp = reader.responseText;
+        Data.push(tmp);
+      }
+    }
+
+    // 基本会話データ（CSVファイル／UTF-8）の読み込み
+    function CSV_Read(dataPath) {
+      let reader = new XMLHttpRequest();
+      reader.open("get", dataPath, true);
+      reader.send(null);
+      reader.onload = function() {
+        convertCSVtoArray(reader.responseText);
+      }
+    }
+
+    // CSVを配列に格納
+    function convertCSVtoArray(str) {
+      let tmp = str.split("\n");
+      for (var i=0; i<tmp.length; ++i) {
+        Talk_Data[i] = tmp[i].split(',');
+      }
+    }
+
+    // 音声合成 ON/OFFボタンが押された時の処理
+    function Fsynthesis() {
+      if (Flag_Speech == 0) {
+        Flag_Speech = 1;
+        SF_val.innerHTML = '<i style="color:#ffffff;">合成 ON </i>'; 
+      }
+      else {
+        Flag_Speech = 0;
+        SF_val.innerHTML = '<i style="color:#ff0000;">合成 OFF</i>';
+      }
+    }
+
+    // 音声認識 ON/OFFボタンが押された時の処理
+    function Frecognition() {
+      if (Flag_Talk == 0) {
+        Flag_Talk = 1;
+        TF_val.innerHTML = '<i style="color:#ffffff;">認識 ON </i>';
+        recognition.start();
+      }
+      else {
+        Flag_Talk = 0;
+        TF_val.innerHTML = '<i style="color:#ff0000;">認識 OFF</i>';
+        recognition.stop();
+      }
+    }
+
+    // 音声合成での発声
+    function speech() {
+      if (Flag_Speech == 0) {return}
+      uttr.text = answer;
+      uttr.rate = 1.0;
+      uttr.pitch = 1.0;
+      speechSynthesis.speak(uttr)
+      question = "";
+    }
+
+    // 音声認識処理
+    recognition.onresult = (event) => {
+      let interimTranscript = '';     // 暫定の認識結果（Androidでは、うまく機能しない）
+      let finalTranscript = '';       // 確定した認識結果
+      question = null;
+      if (speechSynthesis.speaking) {
+        recognition.stop();
+        answer = null;
+        return;
+      }      
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          finalTranscript = event.results[i][0].transcript;
+        } else {
+          interimTranscript = '';
+        }
+      }
+      question = finalTranscript;
+      if (question.length > 0) {
+        if (question != undefined) {
+          textarea = question;
+          if ( !speechSynthesis.speaking ) {
+            bot_input();
+            Send();
+          }
+        }
+      }
+    }
+
+    uttr.start = (event) => {
+      TF_val.innerHTML = '<i style="color:#ff0000;">認識 OFF </i>';
+      recognition.stop();
+    }
+
+    uttr.onend = (event) => {
+      if (Flag_Talk == 1) {
+        TF_val.innerHTML = '<i style="color:#ffffff;">認識 ON </i>';
+        setTimeout(recognition.start(), 5000);
+      } 
+    }
+
+    // for rakutenma
+    var rma = new RakutenMA(model_ja);
+
+    function Keitaiso(words) {
+      rma.featset = RakutenMA.default_featset_ja;
+      rma.hash_func = RakutenMA.create_hash_func(15);
+      var token = rma.tokenize(words);
+      return token;
+    }
+
+    // Bot UI
+    function init() {
+      botui.message.bot({
+        photo: true,
+        photo: './Data/レディーアイコン1R.svg',
+        content: '音声認識を使用する場合、一定時間無音で音声入力がオフになるようです。'
+      });
+
+      botui.message.bot({
+        delay: 500,
+        photo: true,
+        photo: './Data/レディーアイコン1R.svg',
+        content: 'その場合には「音声認識 ON/OFF」ボタンを押して、音声認識 ON にして下さい。'
+      });
+
+      botui.message.bot({
+        delay: 500,
+        content: 'あなたのアイコン（音声入力時用）を選択して下さい。'
+      }).then(function() {
+        return botui.action.button({
+          action: [{
+            text: '男性',
+            value: true
+          }, {
+            text: '女性',
+            value: false
+          }]
+        }).then(function(res) {
+          res.value ? SetMale() : SetFemale();
+        });
+      });
+    }   
+
+    function SetMale() {
+      YourIcon = 0;
+      answer = "何か入力して下さい。";
+      bot_access();
+    }
+
+    function SetFemale() {
+      YourIcon = 1;
+      answer = "何か入力して下さい。";
+      bot_access();
+    }
+
+  function bot_access() {
+    botui.message.bot({
+      photo: true,
+      photo: './Data/レディーアイコン1R.svg',
+      delay: 1000,
+      content: answer
+    }).then(function() {
+
+      return botui.action.text({
+        delay: 1500,
+        action: {
+          placeholder: 'ここに入力して下さい。'
+        }
+      });
+    }).then(function(res) {
+      textarea = res.value;
+      Send();
+    });
+  }
+
+  function bot_input() {
+    if (YourIcon == 0) {
+      botui.message.human({
+        photo: true,
+        photo: './Data/サラリーマン.svg',
+        content: textarea
+      });        
+    }
+    else {
+      botui.message.human({
+        photo: true,
+        photo: './Data/OL風の人物アイコン.svg',
+        content: textarea
+      });  
+    }
+    
+  }
+
+    // Markov Chain on Web AI
+    function markov(Temp_Word) {
+			// 文章の設定
+			var srcStr;
+      for (var i=0; i < Data.length; i++) {
+        srcStr = srcStr + Data[i].split(",")
+      }
+			var sArr = srcStr.split("。");
+			cJpMrkv.setSntncArr(sArr);
+
+			// 文章の取得
+			var mrkvSArr1 = [];
+			var mrkvSArr2 = [];
+
+			var str;
+			for (var i = 0; i < 10; i ++) {
+				// 開始文字列を変数で指定
+				str = cJpMrkv.getSntnc({strtStr: Temp_Word});
+				if (str != "" && $.inArray(str, sArr) == -1){	// 元の文章にあれば登録しない
+					mrkvSArr1.push(str);
+				}
+
+				// 開始文字列に「私」を指定
+				str = cJpMrkv.getSntnc({strtStr: "私"});
+				if (str != "" && $.inArray(str, sArr) == -1){
+					mrkvSArr2.push(str);
+				}
+			}
+			mrkvSArr1 = $WA.Tools.unq(mrkvSArr1);
+			mrkvSArr2 = $WA.Tools.unq(mrkvSArr2);
+
+			var outArr1 = mrkvSArr1[Math.floor(Math.random() * mrkvSArr1.length)];
+			var outArr2 = mrkvSArr2[Math.floor(Math.random() * mrkvSArr2.length)];
+
+      if (Math.floor(Math.random() * 10) < 5) {
+        return outArr1;
+      }
+      else {
+        return outArr2;
+      }
+    }
+
+  window.onload = init;
+
+  </script>
+  </body>
+</html>
