@@ -30,6 +30,7 @@ These are part-2 of voice synthesis and speech recognition programs. In this par
 　「Voice_Synthesis_and_Recognition_002.html」がRakutenMAを使用した人工無脳との会話プログラムです。　形態素解析エンジンが異なるだけで、扱いは上記2-3項と同様です。　次のリンクで形態素解析を表示可能なバージョン（Windows10用）とBot UIを使用したバージョンそれぞれの音声認識のデモが確認できます。  
 [RakutenMAによる人工無脳のデモ（Windows10用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_002.html)  
 [RakutenMA and Bot UIによる人工無脳のデモ（Windows10／Android用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_002_Android.html)  
+[RakutenMA, Web AI and Bot UIによる人工無脳のデモ（Windows10／Android用）へのリンク](https://to-fujita.github.io/Voice-Synthesis-and-Speech-Recognition_-Part_2-/Voice_Synthesis_and_Recognition_003.html)
 
 ### おまけ：
 　フリーの形態素解析エンジンには、「Kuromoji」もありますが、詳細な形態素解析が可能で辞書が充実している分処理が重くなるようで、上記と同様なプログラムでは反応が一拍遅れてしまいました。  
